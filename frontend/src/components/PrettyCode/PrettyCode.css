@@ -1,0 +1,62 @@
+.prettycodeContainer {
+    padding: 16px 20px;
+    background: rgb(255, 255, 255);
+    border: 1px solid #d4d4d4;
+}
+
+.prettycodeHeader {
+    display: flex;
+    justify-content: space-between;
+    margin: -16px -20px 16px -20px;
+    padding: 8px 20px;
+    background-color: #f3f3f3;
+}
+
+.prettycodeContainer * {
+    font-size: 14px !important;
+    line-height: 150% !important;
+
+}
+
+.darkMode.prettycodeContainer {
+    background: #000000;
+    border: 1px solid #313131;
+}
+
+.darkMode.prettycodeContainer>.prettycodeHeader {
+    background-color: #313131;
+}
+
+
+/* Scrollbar */
+
+.prettycode::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.prettycode::-webkit-scrollbar-track {
+    background-color: #f3f3f3;
+}
+
+.prettycode::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+}
+
+/* Scrollbar Darkmode */
+.darkMode.prettycodeContainer>.prettycode::-webkit-scrollbar-track {
+    background-color: #313131;
+}
+
+.darkMode.prettycodeContainer>.prettycode::-webkit-scrollbar-thumb {
+    background-color: #717171;
+}
+
+/* do not touch */
+.prettycode,
+.prettycode * {
+    border: none !important;
+    padding: 0 !important;
+    background-color: rgba(255, 0, 0, 0) !important;
+}
+

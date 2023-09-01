@@ -1,0 +1,251 @@
+[
+  {
+    "_id": {
+      "$oid": "64e6a53e3222900ebe9d77ef"
+    },
+    "domain": "example.com",
+    "dailyTraffic": [
+      {
+        "date": "2023-08-31T00:00:00Z",
+        "countryData": [
+          {
+            "country": "US",
+            "value": 70
+          },
+          {
+            "country": "CN",
+            "value": 20
+          }
+        ],
+        "sourceData": [
+          {
+            "name": "Organic",
+            "value": 50
+          },
+          {
+            "name": "Social",
+            "value": 30
+          },
+          {
+            "name": "Direct",
+            "value": 20
+          }
+        ],
+        "pageData": [
+          {
+            "name": "/home",
+            "value": 120
+          },
+          {
+            "name": "/product",
+            "value": 80
+          }
+        ],
+        "deviceData": [
+          {
+            "name": "Desktop",
+            "value": 60
+          },
+          {
+            "name": "Mobile",
+            "value": 40
+          }
+        ],
+        "hourlyTraffic": [
+          {
+            "hour": "00:00",
+            "uniqueVisitors": 150,
+            "visits": 180,
+            "pageViews": 450,
+            "bounceVisit": 60,
+            "visitDuration": 3800
+          },
+          {
+            "hour": "01:00",
+            "uniqueVisitors": 120,
+            "visits": 140,
+            "pageViews": 390,
+            "bounceVisit": 45,
+            "visitDuration": 4200
+          },
+          {
+            "hour": "02:00",
+            "uniqueVisitors": 110,
+            "visits": 130,
+            "pageViews": 360,
+            "bounceVisit": 35,
+            "visitDuration": 4600
+          },
+          {
+            "hour": "03:00",
+            "uniqueVisitors": 130,
+            "visits": 150,
+            "pageViews": 410,
+            "bounceVisit": 50,
+            "visitDuration": 4100
+          },
+          {
+            "hour": "04:00",
+            "uniqueVisitors": 170,
+            "visits": 190,
+            "pageViews": 520,
+            "bounceVisit": 70,
+            "visitDuration": 3500
+          },
+          {
+            "hour": "05:00",
+            "uniqueVisitors": 100,
+            "visits": 120,
+            "pageViews": 330,
+            "bounceVisit": 40,
+            "visitDuration": 5000
+          },
+          {
+            "hour": "06:00",
+            "uniqueVisitors": 140,
+            "visits": 160,
+            "pageViews": 440,
+            "bounceVisit": 55,
+            "visitDuration": 3900
+          },
+          {
+            "hour": "07:00",
+            "uniqueVisitors": 180,
+            "visits": 200,
+            "pageViews": 550,
+            "bounceVisit": 75,
+            "visitDuration": 3200
+          },
+          {
+            "hour": "08:00",
+            "uniqueVisitors": 200,
+            "visits": 220,
+            "pageViews": 600,
+            "bounceVisit": 90,
+            "visitDuration": 2900
+          },
+          {
+            "hour": "09:00",
+            "uniqueVisitors": 90,
+            "visits": 100,
+            "pageViews": 280,
+            "bounceVisit": 30,
+            "visitDuration": 2700
+          },
+          {
+            "hour": "10:00",
+            "uniqueVisitors": 250,
+            "visits": 280,
+            "pageViews": 770,
+            "bounceVisit": 100,
+            "visitDuration": 2300
+          },
+          {
+            "hour": "11:00",
+            "uniqueVisitors": 160,
+            "visits": 180,
+            "pageViews": 500,
+            "bounceVisit": 65,
+            "visitDuration": 3600
+          },
+          {
+            "hour": "12:00",
+            "uniqueVisitors": 210,
+            "visits": 240,
+            "pageViews": 660,
+            "bounceVisit": 80,
+            "visitDuration": 2600
+          },
+          {
+            "hour": "13:00",
+            "uniqueVisitors": 120,
+            "visits": 140,
+            "pageViews": 390,
+            "bounceVisit": 45,
+            "visitDuration": 4200
+          },
+          {
+            "hour": "14:00",
+            "uniqueVisitors": 190,
+            "visits": 210,
+            "pageViews": 580,
+            "bounceVisit": 75,
+            "visitDuration": 3100
+          },
+          {
+            "hour": "15:00",
+            "uniqueVisitors": 230,
+            "visits": 260,
+            "pageViews": 710,
+            "bounceVisit": 95,
+            "visitDuration": 2400
+          },
+          {
+            "hour": "16:00",
+            "uniqueVisitors": 150,
+            "visits": 170,
+            "pageViews": 470,
+            "bounceVisit": 60,
+            "visitDuration": 3300
+          },
+          {
+            "hour": "17:00",
+            "uniqueVisitors": 140,
+            "visits": 160,
+            "pageViews": 440,
+            "bounceVisit": 55,
+            "visitDuration": 3900
+          },
+          {
+            "hour": "18:00",
+            "uniqueVisitors": 200,
+            "visits": 220,
+            "pageViews": 600,
+            "bounceVisit": 90,
+            "visitDuration": 2900
+          },
+          {
+            "hour": "19:00",
+            "uniqueVisitors": 170,
+            "visits": 190,
+            "pageViews": 520,
+            "bounceVisit": 70,
+            "visitDuration": 3500
+          },
+          {
+            "hour": "20:00",
+            "uniqueVisitors": 260,
+            "visits": 290,
+            "pageViews": 800,
+            "bounceVisit": 105,
+            "visitDuration": 2200
+          },
+          {
+            "hour": "21:00",
+            "uniqueVisitors": 180,
+            "visits": 200,
+            "pageViews": 550,
+            "bounceVisit": 75,
+            "visitDuration": 3200
+          },
+          {
+            "hour": "22:00",
+            "uniqueVisitors": 220,
+            "visits": 240,
+            "pageViews": 660,
+            "bounceVisit": 85,
+            "visitDuration": 2800
+          },
+          {
+            "hour": "23:00",
+            "uniqueVisitors": 130,
+            "visits": 150,
+            "pageViews": 410,
+            "bounceVisit": 50,
+            "visitDuration": 4100
+          }
+        ]
+      }
+    ]
+  }
+]

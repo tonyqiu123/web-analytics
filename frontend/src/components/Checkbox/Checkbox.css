@@ -1,0 +1,58 @@
+/* Checkbox.css */
+.checkbox-container {
+    display: flex;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkbox-container>.checkmark {
+    display: flex;
+    border: 1px solid black;
+    margin-right: 8px;
+    margin-top: 1px;
+    width: 16px;
+    height: 16px;
+}
+
+.checkbox-container>.checkmark>img {
+    margin: auto;
+}
+
+.checkbox-container>input:checked~.checkmark {
+    background-color: black;
+}
+
+.checkbox-container .text-container .primary-text {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.checkbox-container .text-container .sub-text {
+    font-size: 0.8em;
+    color: #717171;
+}
+
+/* dark mode */
+
+.darkMode.checkbox-container .text-container .primary-text {
+    color: rgb(227, 228, 233);
+}
+
+.darkMode.checkbox-container .text-container .sub-text {
+    color: rgb(146, 149, 160);
+}
+
+.darkMode.checkbox-container>.checkmark {
+    border: 1px solid white;
+}
+
+.darkMode.checkbox-container>.checkmark>img {
+    filter: brightness(0)
+}
+
+.darkMode.checkbox-container>input:checked~.checkmark {
+    background-color: rgb(255, 255, 255);
+}

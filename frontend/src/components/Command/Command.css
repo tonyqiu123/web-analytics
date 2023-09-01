@@ -1,0 +1,76 @@
+.command {
+    box-shadow: -5px 15px 20px -3px rgba(51, 51, 51, 0.1), -4px 0 6px -2px rgba(32, 32, 32, 0.05);
+    background-color: white;
+    border: 1px solid #E2E2E2;
+    overflow-y: hidden;
+}
+
+.commandInput {
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid #E2E2E2;
+}
+
+.commandInput:focus {
+    outline: none;
+}
+
+.commandList {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+}
+.commandGroup {
+    height: 100%;
+}
+
+.commandGroup>h3 {
+    font-size: 12px;
+    color: #A0A0A0;
+    font-weight: 500;
+    padding: 6px;
+}
+
+.commandItem {
+    padding: 6px;
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    cursor: default;
+}
+
+.commandItem:hover {
+    background-color: #f3f3f3;
+}
+
+.commandSeparator {
+    height: 1px;
+    background-color: #f3f3f3;
+    margin: 4px -4px;
+}
+
+/* darkMode */
+.darkMode.command {
+    box-shadow: -5px 10px 20px -3px rgba(204, 204, 204, 0.1), -4px 0 6px -2px rgba(32, 32, 32, 0.05);
+    border: 1px solid #313131;
+    background-color: #000000;
+}
+
+.darkMode.commandInput {
+    border: none;
+    border-bottom: 1px solid rgb(54, 54, 54);
+}
+
+.darkMode.commandGroup>h3 {
+    color: #717171;
+}
+.darkMode.commandItem>img {
+    filter: invert(1);
+}
+.darkMode.commandItem:hover {
+    background-color: #313131;
+}
+
+.darkMode.commandSeparator {
+    background-color: #313131;
+}

@@ -1,0 +1,18 @@
+.rating-star {
+  display: inline-block;
+}
+
+.star {
+  color: #A0A0A0;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 350ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.star:hover {
+  color: gold;
+}
+
+.filled {
+  color: gold !important;
+}

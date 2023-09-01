@@ -1,0 +1,35 @@
+.hoverCard {
+    position: relative;
+    width: fit-content;
+}
+
+.hoverCardContent {
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    margin-top: 5px;
+    top: 100%;
+    left: 50%;
+    margin: auto;
+    transform: translate(-50%, 4px) scale(0.8);
+    background-color: white;
+    border: 1px solid #d4d4d4;
+    padding: 12px;
+    z-index: 1001;
+    transition: all 350ms cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: 0 0 20px 5px rgba(204, 204, 204, 0.1), -4px 0 6px -2px rgba(32, 32, 32, 0.05);
+}
+
+.showHoverCardContent {
+    pointer-events: unset;
+    opacity: 1;
+    perspective: 1000px;
+    transform: translate(-50%, 4px) scale(1);
+}
+
+.darkMode.hoverCard>.hoverCardContent {
+    border: 1px solid #313131;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.1), -4px 0 6px -2px rgba(255, 255, 255, 0.05);
+}

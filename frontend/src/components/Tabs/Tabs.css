@@ -1,0 +1,49 @@
+.tabs {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tabsTrigger {
+    position: relative;
+    z-index: 1;
+    padding: 8px 24px;
+    cursor: pointer;
+    color: #A0A0A0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+
+.active.tabsTrigger {
+    border-bottom: 2px solid rgb(0, 0, 0);
+    color: black;
+}
+
+.tabsContent {
+    border-top: 2px solid #d4d4d4;
+    margin-top: -2px;
+    padding-top: 16px;
+    width: 100%;
+}
+
+.tabsTrigger,
+.tabsTrigger>p {
+    transition: all 350ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Darkmode */
+.darkMode.tabs>.tabsTrigger>p {
+    color: #A0A0A0;
+}
+
+.darkMode.tabs>.active.tabsTrigger {
+    border-bottom: 2px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+}
+
+.darkMode.tabs>.active.tabsTrigger>p {
+    color: rgb(243, 243, 243);
+}
+
+.darkMode.tabs>.tabsContent {
+    border-top: 2px solid #313131;
+}
