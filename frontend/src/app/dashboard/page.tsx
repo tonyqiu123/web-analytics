@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
             }
 
             const fetchedData = await response.json();
-            const accumulatedData = fetchedData.hourlyTraffic.reduce((accumulator, current) => {
+            const accumulatedData = fetchedData.hourlyTraffic.reduce((accumulator: any, current: any) => {
                 accumulator.uniqueVisitors += current.uniqueVisitors;
                 accumulator.visits += current.visits;
                 accumulator.pageViews += current.pageViews;

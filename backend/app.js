@@ -27,9 +27,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
+app.set('trust proxy', true);
 const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
     max: 120, // Limit each IP to 120 requests per 1 minute
+    keyGenerator: (req) => {
+        return req.ip; // Use client IP for rate limiting
+      },
     message: 'Too many requests from this IP, please try again later',
 });
 // Apply rate limiting middleware to all routes
