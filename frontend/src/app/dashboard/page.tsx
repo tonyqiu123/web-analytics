@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
 
     const [hourlyTrafficData, setHourlyTrafficData] = useState<any[] | null>(null)
 
-    const [timeFrame, setTimeFrame] = useState<'Today' | 'Last 7 days' | 'Last 30 days' | 'Last 12 months' | 'All time'>('Today')
+    const [timeFrame, setTimeFrame] = useState('Today')
 
     const timeRangeOptions = ['Today', 'Last 7 days', 'Last 30 days', 'Last 12 months', 'All time'];
 
@@ -84,7 +84,7 @@ const Dashboard: React.FC = () => {
         <>
             <NavBar>
                 <div className="row" style={{ margin: 'auto', maxWidth: '2000px', justifyContent: 'space-between' }}>
-                    <h2>Tony's Web Analytics</h2>
+                    <h2>Tony&apos;s Web Analytics</h2>
                 </div>
             </NavBar>
             <div style={{ height: '48px' }}></div>
@@ -158,7 +158,7 @@ const Dashboard: React.FC = () => {
                                     <p>Visitors</p>
                                 </div>
                                 <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data.sourceData.map((data, index) => {
+                                {data.sourceData.map((data: any, index: any) => {
                                     return (
                                         <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                                             <p>{data.name}</p>
@@ -187,7 +187,7 @@ const Dashboard: React.FC = () => {
                                     <p>Visitors</p>
                                 </div>
                                 <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data.pageData.map((data, index) => {
+                                {data.pageData.map((data: any, index: any) => {
                                     return (
                                         <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                                             <p>{data.name}</p>
@@ -226,7 +226,7 @@ const Dashboard: React.FC = () => {
                                     <p>Visitors</p>
                                 </div>
                                 <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data?.countryData.map((data, index) => {
+                                {data?.countryData.map((data: any, index: any) => {
                                     return (
                                         <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                                             <p>{data.country}</p>
@@ -256,7 +256,7 @@ const Dashboard: React.FC = () => {
                                     <p>Visitors</p>
                                 </div>
                                 <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data?.deviceData.map((data, index) => {
+                                {data?.deviceData.map((data: any, index: any) => {
                                     return (
                                         <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                                             <p>{data.name}</p>
