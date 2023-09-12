@@ -69,4 +69,4 @@ function detectDeviceType() {
 }
 
 
-// dont get ip address, just get visists, pageviews, bouncevisists, user device, the page, the country, and their previous website.
+// this script tracks the following: user device type (mobile, desktop), time spent visitng site, user country, the current url path (/about, /contact). All data is collected anonymously and is compliant with the EU's strict GDPR data security standards.
