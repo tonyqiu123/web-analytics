@@ -20,9 +20,7 @@ const Dashboard: React.FC = () => {
 
     const [data, setData] = useState<any>({
         domain: "example.com",
-        uniqueVisitors: 0,
         visits: 0,
-        pageViews: 0,
         bounceVisit: 0,
         visitDuration: 0
     })
@@ -51,9 +49,7 @@ const Dashboard: React.FC = () => {
 
             const fetchedData = await response.json();
             const accumulatedData = fetchedData.hourlyTraffic.reduce((accumulator: any, current: any) => {
-                accumulator.uniqueVisitors += current.uniqueVisitors;
                 accumulator.visits += current.visits;
-                accumulator.pageViews += current.pageViews;
                 accumulator.bounceVisit += current.bounceVisit;
                 accumulator.visitDuration += current.visitDuration;
                 return accumulator;
@@ -64,7 +60,6 @@ const Dashboard: React.FC = () => {
             accumulatedData.pageData = fetchedData.pageData
             accumulatedData.deviceData = fetchedData.deviceData
 
-            console.log(fetchedData)
             setData(accumulatedData);
             setHourlyTrafficData(fetchedData.hourlyTraffic)
 
@@ -99,30 +94,14 @@ const Dashboard: React.FC = () => {
                 <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>
                     <div className="row" style={{ justifyContent: 'space-between' }}>
 
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Number of unique visitors for the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>UNIQUE VISITORS</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.uniqueVisitors} previousData={40} />
-                        </div>
+                   
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Total number of visits for the selected period.">
                                 <h6 style={{ whiteSpace: "nowrap" }}>TOTAL VISITS</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visits} previousData={40} />
                         </div>
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Total pageviews generated during the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>TOTAL PAGEVIEWS</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.pageViews} previousData={40} />
-                        </div>
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Average number of pageviews per visit for the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>VIEWS PER VISIT</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.pageViews / data.visits} previousData={40} />
-                        </div>
+                      
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Percentage of visits with only one page view, indicating user engagement.">
                                 <h6 style={{ whiteSpace: "nowrap" }}>BOUNCE RATE</h6>
