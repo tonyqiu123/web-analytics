@@ -36,7 +36,7 @@ const updateTraffic = asyncHandler(async (req, res) => {
 
         if (!trafficData) {
             // If traffic data for the domain doesn't exist, create a new entry
-            trafficData = new Traffic({ domain });
+            trafficData = await Traffic.create({ domain });
         }
 
         const matchingDailyTraffic = trafficData.dailyTraffic.find(entry => {
