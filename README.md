@@ -1,1 +1,2 @@
+All data is collected anonymously and is compliant with the EU's strict GDPR data security standards
 <img src="https://cdn.discordapp.com/attachments/715319623637270638/1146963910939914340/Group_69.png"/>
