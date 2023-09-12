@@ -25,11 +25,11 @@ window.addEventListener('click', async function () {
         visitDuration: durationInSeconds,
         isBounceVisit: isBounceVisit
     };
-    console.log(`${window.location.hostname}`)
-
 
     try {
-        const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${window.location.hostname}`, {
+
+        const apiUrl = `https://web-analytics-production.up.railway.app/?domain=test`;
+        const response = await fetch(apiUrl, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
