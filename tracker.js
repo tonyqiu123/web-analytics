@@ -25,11 +25,11 @@ window.addEventListener('click', async function () {
         visitDuration: durationInSeconds,
         isBounceVisit: isBounceVisit
     };
-    console.log('working')
+    console.log(`${window.location.hostname}`)
 
 
     try {
-        const response = await fetch('https://web-analytics-production.up.railway.app/', {
+        const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${window.location.hostname}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ window.addEventListener('click', async function () {
 
         const updatedData = await response.json();
         console.log('Updated data:', updatedData);
-        
+
     } catch (error) {
         console.error('Error: ', error)
     }
