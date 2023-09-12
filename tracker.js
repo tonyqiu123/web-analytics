@@ -1,12 +1,12 @@
 let userInteracted = false; // This variable tracks user interactions
 
-// Add an event listener for user interactions
-document.addEventListener('click', function () {
-    userInteracted = true;
-    console.log('click detected')
-});
+// // Add an event listener for user interactions
+// document.addEventListener('click', function () {
+//     userInteracted = true;
+//     console.log('click detected')
+// });
 
-window.addEventListener('beforeunload', async function () {
+window.addEventListener('click', async function () {
     var startTime = new Date().getTime();
     var endTime;
     const userCountry = getUserCountry()
@@ -24,7 +24,29 @@ window.addEventListener('beforeunload', async function () {
         source: source,
         visitDuration: durationInSeconds,
         isBounceVisit: isBounceVisit
-      };
+    };
+    console.log('working')
+
+
+    try {
+        const response = await fetch('https://web-analytics-production.up.railway.app/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+
+        const updatedData = await response.json();
+        console.log('Updated data:', updatedData);
+        
+    } catch (error) {
+        console.error('Error: ', error)
+    }
 });
 
 function getUserCountry() {

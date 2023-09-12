@@ -27,10 +27,6 @@ const Dashboard: React.FC = () => {
 
     const [hourlyTrafficData, setHourlyTrafficData] = useState<any[] | null>(null)
 
-    const [timeFrame, setTimeFrame] = useState('Today')
-
-    const timeRangeOptions = ['Today', 'Last 7 days', 'Last 30 days', 'Last 12 months', 'All time'];
-
     async function fetchData() {
         try {
 
@@ -85,23 +81,20 @@ const Dashboard: React.FC = () => {
             <div style={{ height: '48px' }}></div>
             <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
                 <div className="row" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-
                     <h1>{useFormattedCurrentDate().split("T")[0]}</h1>
-                    <Select style={{ minWidth: '200px' }} queries={timeRangeOptions} selected={timeFrame} setSelected={setTimeFrame} />
-
                 </div>
 
                 <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>
                     <div className="row" style={{ justifyContent: 'space-between' }}>
 
-                   
+
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Total number of visits for the selected period.">
                                 <h6 style={{ whiteSpace: "nowrap" }}>TOTAL VISITS</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visits} previousData={40} />
                         </div>
-                      
+
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Percentage of visits with only one page view, indicating user engagement.">
                                 <h6 style={{ whiteSpace: "nowrap" }}>BOUNCE RATE</h6>
