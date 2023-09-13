@@ -8,10 +8,10 @@ document.addEventListener('click', function () {
 var startTime = new Date().getTime();
 
 window.addEventListener('click', async function () {
-    const userCountry = await getUserCountry();
-    const userDevice = detectDeviceType()
-    const path = window.location.pathname;
-    const source = document.referrer;
+    let userCountry = await getUserCountry();
+    let userDevice = detectDeviceType()
+    let path = window.location.pathname;
+    let source = document.referrer;
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
     const isBounceVisit = !userInteracted;
