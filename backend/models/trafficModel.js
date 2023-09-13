@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 
 const countrySchema = new mongoose.Schema({
-    country: { type: String },
+    country: { type: String, default: 'unknown' },
     value: { type: Number, default: 0 }
 });
 
 const sourceSchema = new mongoose.Schema({
-    name: { type: String },
+    name: { type: String, default: 'unknown' },
     value: { type: Number, default: 0 }
 });
 
 const pageSchema = new mongoose.Schema({
-    name: { type: String },
+    name: { type: String, default: 'unknown' },
     value: { type: Number, default: 0 }
 });
 
 const deviceSchema = new mongoose.Schema({
-    name: { type: String },
+    name: { type: String, default: 'unknown' },
     value: { type: Number, default: 0 }
 });
 
