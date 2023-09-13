@@ -7,7 +7,7 @@ document.addEventListener('click', function () {
 
 var startTime = new Date().getTime();
 
-window.addEventListener('visibilitychange', async function () {
+window.addEventListener('beforeunload', async function () {
     let userCountry = await getUserCountry();
     let userDevice = detectDeviceType()
     let path = window.location.pathname;
