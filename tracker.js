@@ -9,7 +9,7 @@ let userInteracted = false; // This variable tracks user interactions
 window.addEventListener('click', async function () {
     var startTime = new Date().getTime();
     var endTime;
-    const userCountry = getUserCountry().toString()
+    const userCountry = await getUserCountry();
     const userDevice = detectDeviceType()
     const path = window.location.pathname;
     const source = document.referrer;
@@ -52,16 +52,16 @@ window.addEventListener('click', async function () {
     }
 });
 
-function getUserCountry() {
-    fetch('https://ipinfo.io?token=2f9a4aeaf877be')
-        .then(response => response.json())
-        .then(data => {
-            const country = data.country;
-            return country
-        })
-        .catch(error => {
-            console.error("Error fetching user's country: " + error);
-        });
+async function getUserCountry() {
+    try {
+        const response = await fetch('https://ipinfo.io?token=2f9a4aeaf877be');
+        const data = await response.json();
+        const country = data.country;
+        return country;
+    } catch (error) {
+        console.error("Error fetching user's country: " + error);
+        return null; // You may choose to return a default value or handle the error differently
+    }
 }
 
 function detectDeviceType() {
