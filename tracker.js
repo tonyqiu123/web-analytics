@@ -27,6 +27,8 @@ window.addEventListener('click', async function () {
         domain: window.location.hostname
     };
 
+    console.log(requestData)
+
     try {
 
         const apiUrl = `https://web-analytics-production.up.railway.app/`;
