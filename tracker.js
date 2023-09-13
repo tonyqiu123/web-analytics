@@ -1,4 +1,4 @@
-let userInteracted = false; // This variable tracks user interactions
+var userInteracted = false; // This variable tracks user interactions
 
 // Add an event listener for user interactions
 document.addEventListener('click', function () {

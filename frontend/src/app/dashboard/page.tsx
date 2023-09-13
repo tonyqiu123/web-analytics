@@ -36,8 +36,9 @@ const Dashboard: React.FC = () => {
             const day = String(currentDate.getUTCDate()).padStart(2, '0');
 
             const date = `${year}-${month}-${day}T00:00:00Z`;
-            const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
-            // const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=example.com&date=2023-08-31`)
+            // const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
+            const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${date}`);
+
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
