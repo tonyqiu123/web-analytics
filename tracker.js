@@ -39,25 +39,8 @@ window.addEventListener('beforeunload', async function () {
         domain: window.location.hostname
     };
 
-    try {
-
-        const apiUrl = `https://web-analytics-production.up.railway.app/`;
-        const response = await fetch(apiUrl, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData),
-            keepalive: true
-        })
-
-        if (!response.ok) {
-            throw new Error(`Request failed with status: ${response.status}`);
-        }
-
-    } catch (error) {
-        console.error('Error: ', error)
-    }
+    const apiUrl = `https://web-analytics-production.up.railway.app/`;
+    navigator.sendBeacon(apiUrl, requestData)
 });
 
 async function getUserCountry() {

@@ -3,6 +3,6 @@ const router = express.Router();
 const { updateTraffic, getTraffic } = require('../controllers/trafficController');
 
 router.get('/', getTraffic);
-router.put('/', updateTraffic);
+router.post('/', updateTraffic);
 
 module.exports = router;
