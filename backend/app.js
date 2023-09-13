@@ -10,6 +10,9 @@ const cors = require('cors');
 const cron = require('node-cron');
 const TrafficData = require('./models/trafficModel');
 
+
+
+
 // Connect to DB
 (async () => {
 
@@ -26,7 +29,9 @@ const TrafficData = require('./models/trafficModel');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+}));
 
 app.set('trust proxy', true);
 const rateLimiter = rateLimit({
