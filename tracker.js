@@ -9,7 +9,7 @@ let userInteracted = false; // This variable tracks user interactions
 window.addEventListener('click', async function () {
     var startTime = new Date().getTime();
     var endTime;
-    const userCountry = getUserCountry()
+    const userCountry = getUserCountry().toString()
     const userDevice = detectDeviceType()
     const path = window.location.pathname;
     const source = document.referrer;
