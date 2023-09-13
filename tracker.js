@@ -7,7 +7,7 @@ document.addEventListener('click', function () {
 
 var startTime = new Date().getTime();
 
-window.addEventListener('beforeunload', async function () {
+window.addEventListener('click', async function () {
     const userCountry = await getUserCountry();
     const userDevice = detectDeviceType()
     const path = window.location.pathname;
