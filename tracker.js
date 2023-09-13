@@ -23,12 +23,13 @@ window.addEventListener('click', async function () {
         page: path,
         source: source,
         visitDuration: durationInSeconds,
-        isBounceVisit: isBounceVisit
+        isBounceVisit: isBounceVisit,
+        domain: window.location.hostname
     };
 
     try {
 
-        const apiUrl = `https://web-analytics-production.up.railway.app/?domain=test`;
+        const apiUrl = `https://web-analytics-production.up.railway.app/`;
         const response = await fetch(apiUrl, {
             method: 'PUT',
             headers: {

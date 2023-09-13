@@ -28,12 +28,11 @@ const getTraffic = asyncHandler(async (req, res) => {
 
 
 const updateTraffic = asyncHandler(async (req, res) => {
-    const { domain } = req.params;
-    const { country, device, page, source, visitDuration, isBounceVisit } = req.body; // Assuming the request body contains the data to update
+    const { country, device, page, source, visitDuration, isBounceVisit, domain } = req.body; // Assuming the request body contains the data to update
 
     try {
         let trafficData = await Traffic.findOne({ domain });
-
+        console.log(domain)
         if (!trafficData) {
             // If traffic data for the domain doesn't exist, create a new entry
             trafficData = await Traffic.create({ domain });
