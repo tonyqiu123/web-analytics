@@ -26,7 +26,6 @@ window.addEventListener('click', async function () {
         isBounceVisit: isBounceVisit,
         domain: window.location.hostname
     };
-    console.log(requestData)
 
     try {
 
@@ -56,7 +55,7 @@ function getUserCountry() {
         .then(response => response.json())
         .then(data => {
             const country = data.country;
-            console.log("User's country: " + country);
+            return country
         })
         .catch(error => {
             console.error("Error fetching user's country: " + error);
