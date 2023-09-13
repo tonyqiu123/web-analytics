@@ -7,11 +7,11 @@ document.addEventListener('click', function () {
 
 var startTime = new Date().getTime();
 
-window.addEventListener('click', async function () {
-    let userCountry = await getUserCountry();
-    let userDevice = detectDeviceType()
-    let path = window.location.pathname;
-    let source = document.referrer;
+window.addEventListener('beforeunload', async function () {
+    const userCountry = await getUserCountry();
+    const userDevice = detectDeviceType()
+    const path = window.location.pathname;
+    const source = document.referrer;
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
     const isBounceVisit = !userInteracted;
@@ -39,8 +39,25 @@ window.addEventListener('click', async function () {
         domain: window.location.hostname
     };
 
-    const apiUrl = `https://web-analytics-production.up.railway.app/`;
-    navigator.sendBeacon(apiUrl, requestData)
+    try {
+        
+        const apiUrl = `https://web-analytics-production.up.railway.app/`;
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData),
+            keepalive: true
+        })
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error('Error: ', error)
+    }
 });
 
 async function getUserCountry() {
