@@ -6,14 +6,14 @@ let userInteracted = false; // This variable tracks user interactions
 //     console.log('click detected')
 // });
 
+var startTime = new Date().getTime();
+
 window.addEventListener('click', async function () {
-    var startTime = new Date().getTime();
-    var endTime;
     const userCountry = await getUserCountry();
     const userDevice = detectDeviceType()
     const path = window.location.pathname;
     const source = document.referrer;
-    endTime = new Date().getTime();
+    var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
     const isBounceVisit = !userInteracted;
 
