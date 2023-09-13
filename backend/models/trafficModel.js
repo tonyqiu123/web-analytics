@@ -1,42 +1,47 @@
 const mongoose = require('mongoose');
 
 const countrySchema = new mongoose.Schema({
-    country: { type: String, required: true },
-    value: { type: Number, required: true, default: 0 }
+    country: { type: String },
+    value: { type: Number, default: 0 }
 });
 
 const sourceSchema = new mongoose.Schema({
-    source: { type: String, required: true },
-    value: { type: Number, required: true, default: 0 }
+    name: { type: String },
+    value: { type: Number, default: 0 }
 });
 
 const pageSchema = new mongoose.Schema({
-    page: { type: String, required: true },
-    value: { type: Number, required: true, default: 0 }
+    name: { type: String },
+    value: { type: Number, default: 0 }
 });
 
 const deviceSchema = new mongoose.Schema({
-    device: { type: String, required: true },
-    value: { type: Number, required: true, default: 0 }
+    name: { type: String },
+    value: { type: Number, default: 0 }
 });
 
 const hourlyTrafficSchema = new mongoose.Schema({
-    hour: { type: String, required: true },
-    uniqueVisitors: { type: Number, default: 0 },
+    hour: {
+        type: String,
+        default: function () {
+            const currentHour = new Date().getHours();
+            // Format the hour with leading zeros and set the minute part to '00'
+            const formattedHour = currentHour.toString().padStart(2, '0');
+            return `${formattedHour}:00`;
+        }
+    },
     visits: { type: Number, default: 0 },
-    pageViews: { type: Number, default: 0 },
     bounceVisit: { type: Number, default: 0 },
-    visitDuration: { type: Number, default: 0 },
+    visitDuration: { type: Number, default: 0 }
+});
+
+const dailyTrafficSchema = new mongoose.Schema({
+    date: { type: Date, default: Date.now },
+    hourlyTraffic: { type: [hourlyTrafficSchema], default: [] },
     countryData: { type: [countrySchema], default: [] },
     sourceData: { type: [sourceSchema], default: [] },
     pageData: { type: [pageSchema], default: [] },
     deviceData: { type: [deviceSchema], default: [] }
-});
-
-
-const dailyTrafficSchema = new mongoose.Schema({
-    date: { type: Date, required: true },
-    hourlyTraffic: { type: [hourlyTrafficSchema], default: [] }
 });
 
 

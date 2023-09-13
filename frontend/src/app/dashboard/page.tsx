@@ -1,19 +1,14 @@
 "use client"
 
-import Button from "@/components/Button/Button"
 import Card from "@/components/Card/Card"
 import DataIndicator from "@/components/DataIndicator/DataIndicator"
-import { NavBar, NavBarLeft, NavBarRight } from "@/components/NavBar/NavBar"
-import Select from "@/components/Select/Select"
+import { NavBar } from "@/components/NavBar/NavBar"
 import SimpleAreaLineChart from "@/components/SimpleAreaLineChart/SimpleAreaLineChart"
 import SimpleBarChart from "@/components/SimpleBarChart/SimpleBarChart"
-import Image from "next/image"
 import { useEffect, useState } from "react"
 import WorldMap from "react-svg-worldmap";
-import { Editor } from '@monaco-editor/react'
 import useFormattedCurrentDate from "@/hooks/useCurrentDate"
 import Separator from "@/components/Separator/Separator"
-import HoverCard from "@/components/HoverCard/HoverCard"
 import Tooltip from "@/components/Tooltip/Tooltip"
 
 const Dashboard: React.FC = () => {
@@ -30,13 +25,18 @@ const Dashboard: React.FC = () => {
     async function fetchData() {
         try {
 
+            const getDomain = (url: string) => {
+                const params = new URLSearchParams(new URL(url).search);
+                return params.get("domain");
+            }
+
             const currentDate = new Date();
             const year = currentDate.getUTCFullYear();
             const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0'); // Adding 1 because months are 0-indexed
             const day = String(currentDate.getUTCDate()).padStart(2, '0');
 
             const date = `${year}-${month}-${day}T00:00:00Z`;
-            const response = await fetch(`http://localhost:5000/?domain=example.com&date=2023-08-31`)
+            const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
             // const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=example.com&date=2023-08-31`)
 
             if (!response.ok) {
@@ -103,7 +103,7 @@ const Dashboard: React.FC = () => {
                         </div>
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Average duration of visits for the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>VISIT DURATION</h6>
+                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE VISIT DURATION</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visitDuration / data.visits} previousData={40} />
                         </div>

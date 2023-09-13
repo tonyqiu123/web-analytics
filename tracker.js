@@ -26,6 +26,7 @@ window.addEventListener('click', async function () {
         isBounceVisit: isBounceVisit,
         domain: window.location.hostname
     };
+    console.log(requestData)
 
     try {
 

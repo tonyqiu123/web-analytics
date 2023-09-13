@@ -8,6 +8,7 @@ const { errorHandler } = require('./middleware/errorMiddleware');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cron = require('node-cron');
+const TrafficData = require('./models/trafficModel');
 
 // Connect to DB
 (async () => {
@@ -33,7 +34,7 @@ const rateLimiter = rateLimit({
     max: 120, // Limit each IP to 120 requests per 1 minute
     keyGenerator: (req) => {
         return req.ip; // Use client IP for rate limiting
-      },
+    },
     message: 'Too many requests from this IP, please try again later',
 });
 // Apply rate limiting middleware to all routes
@@ -59,5 +60,43 @@ app.use(
 app.use('/', require('./routes/trafficRoutes'))
 
 app.use(errorHandler)
+
+cron.schedule('0 * * * *', async () => {
+    try {
+        const currentDate = new Date();
+        const isFirstHour = currentDate.getHours() === 0;
+
+        const updateOperations = [];
+
+        const entries = await TrafficData.find({});
+
+        for (const domain of entries) {
+            if (isFirstHour) {
+                domain.dailyTraffic.push({});
+            } else {
+                domain.dailyTraffic[domain.dailyTraffic.length - 1].hourlyTraffic.push({});
+            }
+
+            // Prepare the update operation for each document
+            const updateOperation = {
+                updateOne: {
+                    filter: { _id: domain._id },
+                    update: { $set: domain.toObject() },
+                },
+            };
+
+            updateOperations.push(updateOperation);
+        }
+
+        if (updateOperations.length > 0) {
+            // Execute bulk update with updateMany
+            await TrafficData.bulkWrite(updateOperations);
+        }
+
+        console.log('Data update complete.');
+    } catch (error) {
+        console.log('Failed to update data:', error);
+    }
+});
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

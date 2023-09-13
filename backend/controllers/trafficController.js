@@ -28,78 +28,81 @@ const getTraffic = asyncHandler(async (req, res) => {
 
 
 const updateTraffic = asyncHandler(async (req, res) => {
-    const { country, device, page, source, visitDuration, isBounceVisit, domain } = req.body; // Assuming the request body contains the data to update
+    const { country, device, page, source, visitDuration, isBounceVisit, domain } = req.body;
+
+    function generateHourArray() {
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+
+        const hourArray = [];
+
+        for (let hour = 0; hour <= currentHour; hour++) {
+            const hourString = hour.toString().padStart(2, '0') + ':00';
+            hourArray.push({ hour: hourString });
+        }
+
+        return hourArray;
+    }
 
     try {
         let trafficData = await Traffic.findOne({ domain });
-        console.log(domain)
         if (!trafficData) {
-            // If traffic data for the domain doesn't exist, create a new entry
-            trafficData = await Traffic.create({ domain });
+            trafficData = await Traffic.create({ domain, dailyTraffic: [{ hourlyTraffic: generateHourArray() }] });
         }
 
-        const matchingDailyTraffic = trafficData.dailyTraffic.find(entry => {
-            const entryDateISOString = entry.date.toISOString().split("T")[0];
-            return entryDateISOString.startsWith(date.split("T")[0]);
-        });
+        let matchingDailyTraffic = trafficData.dailyTraffic[trafficData.dailyTraffic.length - 1];
+        const initializeArray = (data, key) => {
+            if (!data[key]) {
+                data[key] = [];
+            }
+        };
 
-        if (matchingDailyTraffic) {
-            const countryEntryIndex = matchingDailyTraffic.countryData.findIndex(entry => entry.country === country);
+        initializeArray(matchingDailyTraffic, 'countryData');
+        initializeArray(matchingDailyTraffic, 'sourceData');
+        initializeArray(matchingDailyTraffic, 'pageData');
+        initializeArray(matchingDailyTraffic, 'deviceData');
 
-            if (countryEntryIndex !== -1) {
-                // Country entry exists, increment its value by 1
-                matchingDailyTraffic.countryData[countryEntryIndex].value += 1;
+        const updateEntry = (array, key) => {
+            const entryIndex = array.findIndex(entry => entry.name === key);
+            if (entryIndex !== -1) {
+                array[entryIndex].value += 1;
             } else {
-                // Country entry doesn't exist, create a new entry with value 1
-                matchingDailyTraffic.countryData.push({ country, value: 1 });
+                array.push({ name: key, value: 1 });
             }
+        };
 
-            const sourceEntryIndex = matchingDailyTraffic.sourceData.findIndex(entry => entry.source === source);
-
-            if (sourceEntryIndex !== -1) {
-                // Source entry exists, increment its value by 1
-                matchingDailyTraffic.sourceData[sourceEntryIndex].value += 1;
+        const updateEntryCountry = (array, key) => {
+            const entryIndex = array.findIndex(entry => entry.country === key);
+            if (entryIndex !== -1) {
+                array[entryIndex].value += 1;
             } else {
-                // Source entry doesn't exist, create a new entry with value 1
-                matchingDailyTraffic.sourceData.push({ name: source, value: 1 });
+                array.push({ country: key, value: 1 });
             }
+        };
 
-            const pageEntryIndex = matchingDailyTraffic.pageData.findIndex(entry => entry.page === page);
+        updateEntryCountry(matchingDailyTraffic.countryData, country);
+        updateEntry(matchingDailyTraffic.sourceData, source);
+        updateEntry(matchingDailyTraffic.pageData, page);
+        updateEntry(matchingDailyTraffic.deviceData, device);
 
-            if (pageEntryIndex !== -1) {
-                // Page entry exists, increment its value by 1
-                matchingDailyTraffic.pageData[pageEntryIndex].value += 1;
-            } else {
-                // Page entry doesn't exist, create a new entry with value 1
-                matchingDailyTraffic.pageData.push({ name: page, value: 1 });
-            }
+        const recentHourlyTraffic = matchingDailyTraffic.hourlyTraffic[matchingDailyTraffic.hourlyTraffic.length - 1];
+        recentHourlyTraffic.visits += 1;
 
-            const deviceEntryIndex = matchingDailyTraffic.deviceData.findIndex(entry => entry.device === device);
-
-            if (deviceEntryIndex !== -1) {
-                // Device entry exists, increment its value by 1
-                matchingDailyTraffic.deviceData[deviceEntryIndex].value += 1;
-            } else {
-                // Device entry doesn't exist, create a new entry with value 1
-                matchingDailyTraffic.deviceData.push({ name: device, value: 1 });
-            }
-
-            const recentHourlyTraffic = matchingDailyTraffic.hourlyTraffic[-1];
-            recentHourlyTraffic.visits += 1
-            if (isBounceVisit) {
-                recentHourlyTraffic.bounceVisit += 1
-            }
-            recentHourlyTraffic.visitDuration += visitDuration
-
-
-            await trafficData.save();
+        if (isBounceVisit) {
+            recentHourlyTraffic.bounceVisit += 1;
         }
+
+        recentHourlyTraffic.visitDuration += visitDuration;
+
+        await trafficData.save();
 
         res.status(200).json(trafficData);
     } catch (error) {
         res.status(500).json({ message: 'Error updating traffic data', error: error.message });
     }
 });
+
+
 
 
 
