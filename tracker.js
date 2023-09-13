@@ -3,7 +3,6 @@ let userInteracted = false; // This variable tracks user interactions
 // Add an event listener for user interactions
 document.addEventListener('click', function () {
     userInteracted = true;
-    console.log('click detected')
 });
 
 var startTime = new Date().getTime();
@@ -48,7 +47,8 @@ window.addEventListener('beforeunload', async function () {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestData)
+            body: JSON.stringify(requestData),
+            keepalive: true
         })
 
         if (!response.ok) {
