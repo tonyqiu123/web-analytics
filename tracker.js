@@ -1,14 +1,14 @@
 let userInteracted = false; // This variable tracks user interactions
 
-// // Add an event listener for user interactions
-// document.addEventListener('click', function () {
-//     userInteracted = true;
-//     console.log('click detected')
-// });
+// Add an event listener for user interactions
+document.addEventListener('click', function () {
+    userInteracted = true;
+    console.log('click detected')
+});
 
 var startTime = new Date().getTime();
 
-window.addEventListener('click', async function () {
+window.addEventListener('beforeunload', async function () {
     const userCountry = await getUserCountry();
     const userDevice = detectDeviceType()
     const path = window.location.pathname;
@@ -16,6 +16,19 @@ window.addEventListener('click', async function () {
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
     const isBounceVisit = !userInteracted;
+
+    if (!userCountry) {
+        userCountry = 'unknown';
+    }
+    if (!userDevice) {
+        userDevice = 'unknown';
+    }
+    if (!path) {
+        path = 'unknown';
+    }
+    if (!source) {
+        source = 'unknown';
+    }
 
     const requestData = {
         country: userCountry,
@@ -26,8 +39,6 @@ window.addEventListener('click', async function () {
         isBounceVisit: isBounceVisit,
         domain: window.location.hostname
     };
-
-    console.log(requestData)
 
     try {
 
@@ -43,9 +54,6 @@ window.addEventListener('click', async function () {
         if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
         }
-
-        const updatedData = await response.json();
-        console.log('Updated data:', updatedData);
 
     } catch (error) {
         console.error('Error: ', error)
