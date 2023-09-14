@@ -12,7 +12,7 @@ var userCountry = 'unknown';
 (async () => {
     userCountry = await getUserCountry();
     // convert 'https://brightbearsinfo.vercel.app/blog' to 'brightbearsinfo.vercel.app'
-    if (source) {
+    if (source !== '') {
         sourceHostname = new URL(source).hostname;
     }
 
@@ -40,6 +40,10 @@ var userCountry = 'unknown';
 
 
 document.addEventListener('click', function () {
+    userInteracted = true;
+});
+
+document.addEventListener('touchstart', function () {
     userInteracted = true;
 });
 
