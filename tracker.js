@@ -30,11 +30,14 @@ window.addEventListener('click', async function () {
         source = 'unknown';
     }
 
-    if (new URL(source).hostname === window.location.hostname) {
-        source = window.location.hostname;
+    const sourceHostname = source ? new URL(source).hostname : '';
+    const currentHostname = window.location.hostname;
+
+    if (sourceHostname === currentHostname) {
+        source = currentHostname;
         uniqueVisit = false
     }
-    console.log(new URL(source).hostname, window.location.hostname)
+    console.log(sourceHostname, currentHostname)
 
 
     const requestData = {
