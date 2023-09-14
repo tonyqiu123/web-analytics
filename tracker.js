@@ -34,6 +34,7 @@ window.addEventListener('click', async function () {
         source = window.location.hostname;
         uniqueVisit = false
     }
+    console.log(new URL(source).hostname, window.location.hostname)
 
 
     const requestData = {
@@ -46,6 +47,7 @@ window.addEventListener('click', async function () {
         domain: window.location.hostname,
         isUniqueVisit: uniqueVisit
     };
+    console.log(requestData)
 
     try {
 
