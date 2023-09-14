@@ -7,7 +7,7 @@ document.addEventListener('click', function () {
 
 var startTime = new Date().getTime();
 
-window.addEventListener('click', async function () {
+window.addEventListener('beforeunload', async function () {
     let userCountry = await getUserCountry();
     let userDevice = detectDeviceType()
     let path = window.location.pathname;
@@ -26,14 +26,11 @@ window.addEventListener('click', async function () {
     if (!path) {
         path = 'unknown';
     }
+    
     // Check if the referrer is a valid URL
     let sourceHostname = 'unknown';
     if (source) {
-        try {
-            sourceHostname = new URL(source).hostname;
-        } catch (error) {
-            // Handle invalid URL
-        }
+        sourceHostname = new URL(source).hostname;
     }
 
     const currentHostname = window.location.hostname;
@@ -54,8 +51,6 @@ window.addEventListener('click', async function () {
         domain: window.location.hostname,
         isUniqueVisit: uniqueVisit
     };
-    console.log(requestData)
-
     try {
 
         const apiUrl = `https://web-analytics-production.up.railway.app/`;
