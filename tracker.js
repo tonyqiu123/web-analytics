@@ -26,19 +26,23 @@ window.addEventListener('click', async function () {
     if (!path) {
         path = 'unknown';
     }
-    if (!source) {
-        source = 'unknown';
+    // Check if the referrer is a valid URL
+    let sourceHostname = 'unknown';
+    if (source) {
+        try {
+            sourceHostname = new URL(source).hostname;
+        } catch (error) {
+            // Handle invalid URL
+        }
     }
 
-    const sourceHostname = source ? new URL(source).hostname : '';
     const currentHostname = window.location.hostname;
 
+    // Check if the source hostname is the same as the current window location hostname
     if (sourceHostname === currentHostname) {
         source = currentHostname;
         uniqueVisit = false
     }
-    console.log(sourceHostname, currentHostname)
-
 
     const requestData = {
         country: userCountry,
