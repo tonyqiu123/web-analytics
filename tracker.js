@@ -15,7 +15,7 @@ window.addEventListener('beforeunload', async function () {
     var endTime = new Date().getTime();
     let uniqueVisit = true
     var durationInSeconds = (endTime - startTime) / 1000;
-    const isBounceVisit = !userInteracted;
+    let isBounceVisit = !userInteracted;
 
     if (!userCountry) {
         userCountry = 'unknown';
