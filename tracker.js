@@ -1,63 +1,51 @@
-var userInteracted = false; // This variable tracks user interactions
+// Initialize variables
+var userInteracted = false;
+var startTime = new Date().getTime();
+var userCountry;
+var userDevice;
+var path = window.location.pathname;
+var source = document.referrer || 'direct';
+var uniqueVisit = source === '' ? true : sourceHostname !== window.location.hostname;
+var sourceHostname = 'unknown';
+
+if (source) {
+    sourceHostname = new URL(source).hostname;
+}
 
 // Add an event listener for user interactions
 document.addEventListener('click', function () {
     userInteracted = true;
 });
 
-var startTime = new Date().getTime();
+// Add a beforeunload event listener to send analytics data
+window.addEventListener('beforeunload', sendAnalyticsData);
 
-window.addEventListener('beforeunload', async function () {
-    let userCountry = await getUserCountry();
-    let userDevice = detectDeviceType()
-    let path = window.location.pathname;
-    let source = document.referrer;
+// Fetch user's country
+getUserCountry().then(country => {
+    userCountry = country || 'unknown';
+});
+
+// Detect user's device type
+userDevice = detectDeviceType();
+
+async function sendAnalyticsData() {
     var endTime = new Date().getTime();
-    let uniqueVisit = true
     var durationInSeconds = (endTime - startTime) / 1000;
-    let isBounceVisit = !userInteracted;
-
-    if (!userCountry) {
-        userCountry = 'unknown';
-    }
-    if (!userDevice) {
-        userDevice = 'unknown';
-    }
-    if (!path) {
-        path = 'unknown';
-    }
-    
-    // Check if the referrer is a valid URL
-    let sourceHostname = 'unknown';
-    if (source) {
-        sourceHostname = new URL(source).hostname;
-    }
-
-    if (source === '') {
-        source = 'direct'
-    }
-
-    const currentHostname = window.location.hostname;
-
-    // Check if the source hostname is the same as the current window location hostname
-    if (sourceHostname === currentHostname) {
-        source = currentHostname;
-        uniqueVisit = false
-    }
+    var isBounceVisit = !userInteracted;
 
     const requestData = {
         country: userCountry,
         device: userDevice,
-        page: path,
+        page: path || 'unknown',
         source: source,
         visitDuration: durationInSeconds,
         isBounceVisit: isBounceVisit,
         domain: window.location.hostname,
         isUniqueVisit: uniqueVisit
     };
-    try {
 
-        const apiUrl = `https://web-analytics-production.up.railway.app/`;
+    try {
+        const apiUrl = 'https://web-analytics-production.up.railway.app/';
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
@@ -65,31 +53,29 @@ window.addEventListener('beforeunload', async function () {
             },
             body: JSON.stringify(requestData),
             keepalive: true
-        })
+        });
 
         if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
         }
-
     } catch (error) {
-        console.error('Error: ', error)
+        console.error('Error:', error);
     }
-});
+}
 
 async function getUserCountry() {
     try {
         const response = await fetch('https://ipinfo.io?token=2f9a4aeaf877be');
         const data = await response.json();
-        const country = data.country;
-        return country;
+        return data.country;
     } catch (error) {
-        console.error("Error fetching user's country: " + error);
-        return null; // You may choose to return a default value or handle the error differently
+        console.error("Error fetching user's country:", error);
+        return null;
     }
 }
 
 function detectDeviceType() {
-    // Regular expressions for various device types
+    const userAgent = navigator.userAgent;
     const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone|Mobile|Mobile Safari|Mobile\ssafari|Silk|Kindle|Dolfin|Opera Mini|Opera Mobi|Fennec/i;
     const tabletRegex = /iPad|Tablet|Nexus|Amazon Kindle|Touch|PlayBook|Tablet\sOS|Silk|Kindle|KFOT|KFJWI|KFSOWI|KFTHWI|KFMAWI|KFTT|KFJWA|KFJWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFFOWI|KFMEWI|KFSAWA|KFTBWI/i;
     const tvRegex = /SmartTV|Television|TV/i;
@@ -97,10 +83,6 @@ function detectDeviceType() {
     const wearableRegex = /Smartwatch|Wearable/i;
     const desktopRegex = /Windows|Macintosh|Linux|Ubuntu/i;
 
-    // User agent string
-    const userAgent = navigator.userAgent;
-
-    // Check if the user agent string matches any of the regex patterns
     if (mobileRegex.test(userAgent)) {
         return "Mobile";
     } else if (tabletRegex.test(userAgent)) {
@@ -114,9 +96,10 @@ function detectDeviceType() {
     } else if (desktopRegex.test(userAgent)) {
         return "Desktop";
     } else {
-        return "Unknown"; // If none of the patterns match
+        return "Unknown";
     }
 }
+
 
 
 // this script tracks the following: user device type (mobile, desktop), time spent visitng site, user country, the current url path (/about, /contact). All data is collected anonymously and is compliant with the EU's strict GDPR data security standards.

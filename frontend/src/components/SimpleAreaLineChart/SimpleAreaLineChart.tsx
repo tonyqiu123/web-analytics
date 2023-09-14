@@ -11,9 +11,10 @@ import {
 
 type props = {
   data: any
+  type: string
 }
 
-const SimpleAreaLineChart: React.FC<props> = ({ data }) => {
+const SimpleAreaLineChart: React.FC<props> = ({ data, type }) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
@@ -31,8 +32,7 @@ const SimpleAreaLineChart: React.FC<props> = ({ data }) => {
         <XAxis dataKey="hour" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="visits" stackId="1" stroke="#82ca9d" fill="#DBC2CF" />
-        <Area type="monotone" dataKey="bounceVisit" stackId="2" stroke="#82ca9d" fill="#3E6990" />
+        <Area type="monotone" dataKey={type} stackId="1" stroke="#DBC2CF" fill="#DBC2CF" />
       </AreaChart>
     </ResponsiveContainer>
   );

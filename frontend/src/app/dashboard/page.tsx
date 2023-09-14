@@ -10,8 +10,11 @@ import WorldMap from "react-svg-worldmap";
 import useFormattedCurrentDate from "@/hooks/useCurrentDate"
 import Separator from "@/components/Separator/Separator"
 import Tooltip from "@/components/Tooltip/Tooltip"
+import Select from "@/components/Select/Select"
 
 const Dashboard: React.FC = () => {
+
+    const [selectedHourlyStat, setSelectedHourlyStat] = useState('uniqueVisits')
 
     const [data, setData] = useState<any>({
         domain: "example.com",
@@ -23,10 +26,15 @@ const Dashboard: React.FC = () => {
 
     const [hourlyTrafficData, setHourlyTrafficData] = useState<any[] | null>(null)
 
+
+    const hourlyTrafficTypes = ['uniqueVisits', 'visits', 'visitDuration', 'bounceVisit']
+
     const getDomain = (url: string) => {
         const params = new URLSearchParams(new URL(url).search);
         return params.get("domain");
     }
+
+    const domain = getDomain(window.location.href)
 
     async function fetchData() {
         try {
@@ -82,8 +90,9 @@ const Dashboard: React.FC = () => {
             </NavBar>
             <div style={{ height: '48px' }}></div>
             <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
-                <div className="column" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                <div className="column" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between' }}>
                     <h1>{useFormattedCurrentDate().split("T")[0]}</h1>
+                    <h1>Traffic of: {domain}</h1>
                 </div>
 
                 <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>
@@ -91,34 +100,34 @@ const Dashboard: React.FC = () => {
 
 
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Total number of visits for the selected period.">
+                            <Tooltip toolTipText="Total number of visits where the source is NOT from the tracked domain">
                                 <h6 style={{ whiteSpace: "nowrap" }}>UNIQUE VISITS</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.uniqueVisits} previousData={40} />
                         </div>
 
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Total number of visits for the selected period.">
+                            <Tooltip toolTipText="Total visits of all pages combined">
                                 <h6 style={{ whiteSpace: "nowrap" }}>TOTAL PAGE VISITS</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visits} previousData={40} />
                         </div>
 
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Total number of visits for the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE PAGE VIEWS PER VISIT</h6>
+                            <Tooltip toolTipText="The average number of pages viewed per unique visit">
+                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE PAGE VIEWS PER UNIQUE VISIT</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visits / data.uniqueVisits} previousData={40} />
                         </div>
 
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Percentage of visits with only one page view, indicating user engagement.">
+                            <Tooltip toolTipText="Percent of unique visits where the user clicks on the webpage">
                                 <h6 style={{ whiteSpace: "nowrap" }}>BOUNCE RATE</h6>
                             </Tooltip>
                             <DataIndicator percent={true} text="from yesterday" currentData={data.bounceVisit * 100 / data.visits} previousData={40} />
                         </div>
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Average duration of visits for the selected period.">
+                            <Tooltip toolTipText="Average duration of a unique visit in seconds">
                                 <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE UNIQUE VISIT DURATION</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visitDuration / data.uniqueVisits} previousData={40} />
@@ -127,8 +136,9 @@ const Dashboard: React.FC = () => {
                     </div>
 
                     <div style={{ height: '400px' }}>
+                        <Select queries={hourlyTrafficTypes} selected={selectedHourlyStat} setSelected={setSelectedHourlyStat} />
                         {hourlyTrafficData ?
-                            <SimpleAreaLineChart data={hourlyTrafficData} />
+                            <SimpleAreaLineChart type={selectedHourlyStat} data={hourlyTrafficData} />
                             : <h1>Loading</h1>}
                     </div>
 
