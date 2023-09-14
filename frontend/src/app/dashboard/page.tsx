@@ -17,7 +17,8 @@ const Dashboard: React.FC = () => {
         domain: "example.com",
         visits: 0,
         bounceVisit: 0,
-        visitDuration: 0
+        visitDuration: 0,
+        uniqueVisits: 0
     })
 
     const [hourlyTrafficData, setHourlyTrafficData] = useState<any[] | null>(null)
@@ -29,16 +30,14 @@ const Dashboard: React.FC = () => {
 
     async function fetchData() {
         try {
-
-
             const currentDate = new Date();
             const year = currentDate.getUTCFullYear();
             const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0'); // Adding 1 because months are 0-indexed
             const day = String(currentDate.getUTCDate()).padStart(2, '0');
 
             const date = `${year}-${month}-${day}T00:00:00Z`;
-            // const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
-            const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${date}`);
+            const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
+            // const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${date}`);
 
 
             if (!response.ok) {
@@ -50,6 +49,7 @@ const Dashboard: React.FC = () => {
                 accumulator.visits += current.visits;
                 accumulator.bounceVisit += current.bounceVisit;
                 accumulator.visitDuration += current.visitDuration;
+                accumulator.uniqueVisits += current.uniqueVisits;
                 return accumulator;
 
             }, { ...data });
@@ -84,7 +84,6 @@ const Dashboard: React.FC = () => {
             <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
                 <div className="column" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                     <h1>{useFormattedCurrentDate().split("T")[0]}</h1>
-                    <h1>ANALYTICS FOR: {getDomain(window.location.href)}</h1>
                 </div>
 
                 <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>

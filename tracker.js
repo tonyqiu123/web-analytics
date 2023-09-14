@@ -44,7 +44,7 @@ window.addEventListener('beforeunload', async function () {
         visitDuration: durationInSeconds,
         isBounceVisit: isBounceVisit,
         domain: window.location.hostname,
-        uniqueVisit
+        isUniqueVisit: uniqueVisit
     };
 
     try {
