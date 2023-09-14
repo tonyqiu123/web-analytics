@@ -92,9 +92,23 @@ const Dashboard: React.FC = () => {
 
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Total number of visits for the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>TOTAL VISITS</h6>
+                                <h6 style={{ whiteSpace: "nowrap" }}>UNIQUE VISITS</h6>
+                            </Tooltip>
+                            <DataIndicator text="from yesterday" currentData={data.uniqueVisits} previousData={40} />
+                        </div>
+
+                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                            <Tooltip toolTipText="Total number of visits for the selected period.">
+                                <h6 style={{ whiteSpace: "nowrap" }}>TOTAL PAGE VISITS</h6>
                             </Tooltip>
                             <DataIndicator text="from yesterday" currentData={data.visits} previousData={40} />
+                        </div>
+
+                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                            <Tooltip toolTipText="Total number of visits for the selected period.">
+                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE PAGE VIEWS PER VISIT</h6>
+                            </Tooltip>
+                            <DataIndicator text="from yesterday" currentData={data.visits / data.uniqueVisits} previousData={40} />
                         </div>
 
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
@@ -105,9 +119,9 @@ const Dashboard: React.FC = () => {
                         </div>
                         <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
                             <Tooltip toolTipText="Average duration of visits for the selected period.">
-                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE VISIT DURATION</h6>
+                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE UNIQUE VISIT DURATION</h6>
                             </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.visitDuration / data.visits} previousData={40} />
+                            <DataIndicator text="from yesterday" currentData={data.visitDuration / data.uniqueVisits} previousData={40} />
                         </div>
 
                     </div>
