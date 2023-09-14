@@ -75,17 +75,17 @@ const updateTraffic = asyncHandler(async (req, res) => {
                 array.push({ country: key, value: 1 });
             }
         };
+        initializeArray(matchingDailyTraffic, 'pageData');
+        updateEntry(matchingDailyTraffic.pageData, page);
 
         if (isUniqueVisit) {
 
             initializeArray(matchingDailyTraffic, 'countryData');
             initializeArray(matchingDailyTraffic, 'sourceData');
-            initializeArray(matchingDailyTraffic, 'pageData');
             initializeArray(matchingDailyTraffic, 'deviceData');
 
             updateEntryCountry(matchingDailyTraffic.countryData, country);
             updateEntry(matchingDailyTraffic.sourceData, source);
-            updateEntry(matchingDailyTraffic.pageData, page);
             updateEntry(matchingDailyTraffic.deviceData, device);
         }
 

@@ -33,6 +33,10 @@ window.addEventListener('beforeunload', async function () {
         sourceHostname = new URL(source).hostname;
     }
 
+    if (source === '') {
+        source = 'direct'
+    }
+
     const currentHostname = window.location.hostname;
 
     // Check if the source hostname is the same as the current window location hostname
