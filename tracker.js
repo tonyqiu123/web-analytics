@@ -1,13 +1,13 @@
 // Intitialize variables
-let userInteracted = false;  // check if user clicked
+var userInteracted = false;  // check if user clicked
 const startTime = new Date().getTime();
-let userDevice = detectDeviceType()
-let path = window.location.pathname;
-let source = document.referrer; //which domain the user came from
-let uniqueVisit = true
-let sourceHostname = 'unknown';
-let currentHostname = window.location.hostname;
-let userCountry = 'unknown';
+var userDevice = detectDeviceType()
+var path = window.location.pathname;
+var source = document.referrer; //which domain the user came from
+var uniqueVisit = true
+var sourceHostname = 'unknown';
+var currentHostname = window.location.hostname;
+var userCountry = 'unknown';
 
 (async () => {
     userCountry = await getUserCountry();
