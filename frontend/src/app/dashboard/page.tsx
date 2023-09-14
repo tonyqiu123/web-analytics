@@ -22,13 +22,14 @@ const Dashboard: React.FC = () => {
 
     const [hourlyTrafficData, setHourlyTrafficData] = useState<any[] | null>(null)
 
+    const getDomain = (url: string) => {
+        const params = new URLSearchParams(new URL(url).search);
+        return params.get("domain");
+    }
+
     async function fetchData() {
         try {
 
-            const getDomain = (url: string) => {
-                const params = new URLSearchParams(new URL(url).search);
-                return params.get("domain");
-            }
 
             const currentDate = new Date();
             const year = currentDate.getUTCFullYear();
@@ -81,8 +82,9 @@ const Dashboard: React.FC = () => {
             </NavBar>
             <div style={{ height: '48px' }}></div>
             <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
-                <div className="row" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                <div className="column" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                     <h1>{useFormattedCurrentDate().split("T")[0]}</h1>
+                    <h1>ANALYTICS FOR: {getDomain(window.location.href)}</h1>
                 </div>
 
                 <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>

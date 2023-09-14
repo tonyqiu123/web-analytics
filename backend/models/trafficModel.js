@@ -32,7 +32,8 @@ const hourlyTrafficSchema = new mongoose.Schema({
     },
     visits: { type: Number, default: 0 },
     bounceVisit: { type: Number, default: 0 },
-    visitDuration: { type: Number, default: 0 }
+    visitDuration: { type: Number, default: 0 },
+    uniqueVisits: { type: Number, default: 0 }
 });
 
 const dailyTrafficSchema = new mongoose.Schema({

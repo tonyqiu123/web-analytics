@@ -28,7 +28,7 @@ const getTraffic = asyncHandler(async (req, res) => {
 
 
 const updateTraffic = asyncHandler(async (req, res) => {
-    const { country, device, page, source, visitDuration, isBounceVisit, domain } = req.body;
+    const { country, device, page, source, visitDuration, isBounceVisit, domain, isUniqueVisit } = req.body;
 
     function generateHourArray() {
         const currentDate = new Date();
@@ -57,10 +57,6 @@ const updateTraffic = asyncHandler(async (req, res) => {
             }
         };
 
-        initializeArray(matchingDailyTraffic, 'countryData');
-        initializeArray(matchingDailyTraffic, 'sourceData');
-        initializeArray(matchingDailyTraffic, 'pageData');
-        initializeArray(matchingDailyTraffic, 'deviceData');
 
         const updateEntry = (array, key) => {
             const entryIndex = array.findIndex(entry => entry.name === key);
@@ -80,16 +76,29 @@ const updateTraffic = asyncHandler(async (req, res) => {
             }
         };
 
-        updateEntryCountry(matchingDailyTraffic.countryData, country);
-        updateEntry(matchingDailyTraffic.sourceData, source);
-        updateEntry(matchingDailyTraffic.pageData, page);
-        updateEntry(matchingDailyTraffic.deviceData, device);
+        if (isUniqueVisit) {
+
+            initializeArray(matchingDailyTraffic, 'countryData');
+            initializeArray(matchingDailyTraffic, 'sourceData');
+            initializeArray(matchingDailyTraffic, 'pageData');
+            initializeArray(matchingDailyTraffic, 'deviceData');
+
+            updateEntryCountry(matchingDailyTraffic.countryData, country);
+            updateEntry(matchingDailyTraffic.sourceData, source);
+            updateEntry(matchingDailyTraffic.pageData, page);
+            updateEntry(matchingDailyTraffic.deviceData, device);
+        }
 
         const recentHourlyTraffic = matchingDailyTraffic.hourlyTraffic[matchingDailyTraffic.hourlyTraffic.length - 1];
+
         recentHourlyTraffic.visits += 1;
 
         if (isBounceVisit) {
             recentHourlyTraffic.bounceVisit += 1;
+        }
+
+        if (isUniqueVisit) {
+            recentHourlyTraffic.uniqueVisits += 1;
         }
 
         recentHourlyTraffic.visitDuration += visitDuration;

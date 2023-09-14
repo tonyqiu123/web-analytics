@@ -13,6 +13,7 @@ window.addEventListener('beforeunload', async function () {
     let path = window.location.pathname;
     let source = document.referrer;
     var endTime = new Date().getTime();
+    let uniqueVisit = true
     var durationInSeconds = (endTime - startTime) / 1000;
     const isBounceVisit = !userInteracted;
 
@@ -29,6 +30,12 @@ window.addEventListener('beforeunload', async function () {
         source = 'unknown';
     }
 
+    if (new URL(source).hostname === window.location.hostname) {
+        source = window.location.hostname;
+        uniqueVisit = false
+    }
+
+
     const requestData = {
         country: userCountry,
         device: userDevice,
@@ -36,11 +43,12 @@ window.addEventListener('beforeunload', async function () {
         source: source,
         visitDuration: durationInSeconds,
         isBounceVisit: isBounceVisit,
-        domain: window.location.hostname
+        domain: window.location.hostname,
+        uniqueVisit
     };
 
     try {
-        
+
         const apiUrl = `https://web-analytics-production.up.railway.app/`;
         const response = await fetch(apiUrl, {
             method: 'POST',
