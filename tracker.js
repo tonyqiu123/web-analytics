@@ -1,6 +1,6 @@
 // Intitialize variables
 var userInteracted = false;  // check if user clicked
-const startTime = new Date().getTime();
+var startTime = new Date().getTime();
 var userDevice = detectDeviceType()
 var path = window.location.pathname;
 var source = document.referrer; //which domain the user came from
