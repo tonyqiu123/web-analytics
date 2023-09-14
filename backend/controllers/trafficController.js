@@ -107,6 +107,7 @@ const updateTraffic = asyncHandler(async (req, res) => {
 
         res.status(200).json(trafficData);
     } catch (error) {
+        console.log({ error: error.message })
         res.status(500).json({ message: 'Error updating traffic data', error: error.message });
     }
 });
