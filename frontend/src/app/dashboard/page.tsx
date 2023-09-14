@@ -34,8 +34,6 @@ const Dashboard: React.FC = () => {
         return params.get("domain");
     }
 
-    const domain = getDomain(window.location.href)
-
     async function fetchData() {
         try {
             const currentDate = new Date();
@@ -44,8 +42,8 @@ const Dashboard: React.FC = () => {
             const day = String(currentDate.getUTCDate()).padStart(2, '0');
 
             const date = `${year}-${month}-${day}T00:00:00Z`;
-            const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
-            // const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${date}`);
+            // const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
+            const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${date}`);
 
 
             if (!response.ok) {
@@ -92,7 +90,6 @@ const Dashboard: React.FC = () => {
             <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
                 <div className="column" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between' }}>
                     <h1>{useFormattedCurrentDate().split("T")[0]}</h1>
-                    <h1>Traffic of: {domain}</h1>
                 </div>
 
                 <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>
