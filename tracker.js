@@ -44,7 +44,7 @@ document.addEventListener('click', function () {
 });
 
 
-window.addEventListener('click', async function () {
+window.addEventListener('beforeunload', async function () {
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
 
