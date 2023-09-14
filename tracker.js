@@ -1,39 +1,43 @@
 // Intitialize variables
 let userInteracted = false;  // check if user clicked
 const startTime = new Date().getTime();
-let userCountry = await getUserCountry();
 let userDevice = detectDeviceType()
 let path = window.location.pathname;
 let source = document.referrer; //which domain the user came from
 let uniqueVisit = true
 let sourceHostname = 'unknown';
 let currentHostname = window.location.hostname;
+let userCountry = 'unknown';
 
-// convert 'https://brightbearsinfo.vercel.app/blog' to 'brightbearsinfo.vercel.app'
-if (source) {
-    sourceHostname = new URL(source).hostname;
-}
+(async () => {
+    userCountry = await getUserCountry();
+    // convert 'https://brightbearsinfo.vercel.app/blog' to 'brightbearsinfo.vercel.app'
+    if (source) {
+        sourceHostname = new URL(source).hostname;
+    }
 
-// check if domain of source equals domain of current website (eg. does 'brightbearsinfo.vercel.app' === 'discord.com')
-if (sourceHostname === currentHostname) {
-    uniqueVisit = false
-}
+    // check if domain of source equals domain of current website (eg. does 'brightbearsinfo.vercel.app' === 'discord.com')
+    if (sourceHostname === currentHostname) {
+        uniqueVisit = false
+    }
 
-// if there is no source, then that means the user searched up the website's url directly.
-if (source === '') {
-    source = 'direct'
-}
+    // if there is no source, then that means the user searched up the website's url directly.
+    if (source === '') {
+        source = 'direct'
+    }
 
-// convert empty data to unknown
-if (!userCountry) {
-    userCountry = 'unknown';
-}
-if (!userDevice) {
-    userDevice = 'unknown';
-}
-if (!path) {
-    path = 'unknown';
-}
+    // convert empty data to unknown
+    if (!userCountry) {
+        userCountry = 'unknown';
+    }
+    if (!userDevice) {
+        userDevice = 'unknown';
+    }
+    if (!path) {
+        path = 'unknown';
+    }
+})()
+
 
 document.addEventListener('click', function () {
     userInteracted = true;
