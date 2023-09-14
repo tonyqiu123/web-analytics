@@ -12,7 +12,7 @@ var userCountry = 'unknown';
 (async () => {
     userCountry = await getUserCountry();
     // convert 'https://brightbearsinfo.vercel.app/blog' to 'brightbearsinfo.vercel.app'
-    if (source !== '' || source !== 'direct') {
+    if (source && source !== 'direct') {
         console.log(source)
         sourceHostname = new URL(source).hostname;
     }
