@@ -134,9 +134,8 @@ const Dashboard: React.FC = () => {
                         </div>
 
                     </div>
-
+                    <Select queries={hourlyTrafficTypes} selected={selectedHourlyStat} setSelected={setSelectedHourlyStat} />
                     <div style={{ height: '400px' }}>
-                        <Select queries={hourlyTrafficTypes} selected={selectedHourlyStat} setSelected={setSelectedHourlyStat} />
                         {hourlyTrafficData ?
                             <SimpleAreaLineChart type={selectedHourlyStat} data={hourlyTrafficData} />
                             : <h1>Loading</h1>}

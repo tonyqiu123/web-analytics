@@ -40,7 +40,7 @@ document.addEventListener('click', function () {
 });
 
 
-window.addEventListener('beforeunload', async function () {
+window.addEventListener('click', async function () {
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
 
