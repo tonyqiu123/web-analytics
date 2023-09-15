@@ -69,7 +69,8 @@ app.use(errorHandler)
 cron.schedule('0 * * * *', async () => {
     try {
         const currentDate = new Date();
-        const isFirstHour = currentDate.getHours() === 0;
+        const currentHour = currentDate.getHours()
+        const isFirstHour = currentHour === 0;
 
         const updateOperations = [];
 
@@ -79,7 +80,7 @@ cron.schedule('0 * * * *', async () => {
             if (isFirstHour) {
                 domain.dailyTraffic.push({});
             } else {
-                domain.dailyTraffic[domain.dailyTraffic.length - 1].hourlyTraffic.push({});
+                domain.dailyTraffic[domain.dailyTraffic.length - 1].hourlyTraffic.push({ hour: currentHour.padStart(2, '0') + ':00' });
             }
 
             // Prepare the update operation for each document
