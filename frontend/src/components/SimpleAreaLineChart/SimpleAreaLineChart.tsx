@@ -32,7 +32,7 @@ const SimpleAreaLineChart: React.FC<props> = ({ data, type }) => {
         <XAxis dataKey="hour" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey={type} stackId="1" stroke="#DBC2CF" fill="#DBC2CF" />
+        <Area type="monotone" dataKey={type} stackId="1" stroke="#0582ca" fill="#0582ca" />
       </AreaChart>
     </ResponsiveContainer>
   );

@@ -25,7 +25,7 @@ const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data = {} }) => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="value" fill="#0582CA" />
+                <Bar dataKey="value" fill="#69b4df" />
             </BarChart>
         </ResponsiveContainer>
     );

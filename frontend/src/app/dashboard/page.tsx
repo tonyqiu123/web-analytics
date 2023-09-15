@@ -11,10 +11,17 @@ import useFormattedCurrentDate from "@/hooks/useCurrentDate"
 import Separator from "@/components/Separator/Separator"
 import Tooltip from "@/components/Tooltip/Tooltip"
 import Select from "@/components/Select/Select"
+import HoverCard from "@/components/HoverCard/HoverCard"
 
 const Dashboard: React.FC = () => {
 
+    const currentDate = new Date();
+
     const [selectedHourlyStat, setSelectedHourlyStat] = useState('uniqueVisits')
+    const [day, setDay] = useState(String(currentDate.getUTCDate()).padStart(2, '0'))
+    const [month, setMonth] = useState(String(currentDate.getUTCMonth() + 1).padStart(2, '0'))
+    const [year, setYear] = useState(currentDate.getUTCFullYear())
+    const [trackingDomain, setTrackingDomain] = useState<string | null>('')
 
     const [data, setData] = useState<any>({
         domain: "example.com",
@@ -26,7 +33,6 @@ const Dashboard: React.FC = () => {
 
     const [hourlyTrafficData, setHourlyTrafficData] = useState<any[] | null>(null)
 
-
     const hourlyTrafficTypes = ['uniqueVisits', 'visits', 'visitDuration', 'bounceVisit']
 
     const getDomain = (url: string) => {
@@ -34,13 +40,37 @@ const Dashboard: React.FC = () => {
         return params.get("domain");
     }
 
+    function formatDateToText(dateString: string) {
+        // Split the date string into year, month, and day
+        const [year, month, day] = dateString.split("-");
+
+        // Define arrays for month names and day names
+        const monthNames = [
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        ];
+
+        // Convert the month and day to integers
+        const monthNumber = parseInt(month, 10);
+        const dayNumber = parseInt(day, 10);
+
+        // Check if the date is valid
+        if (isNaN(monthNumber) || isNaN(dayNumber)) {
+            return "Invalid Date";
+        }
+
+        // Get the month name from the monthNames array
+        const monthName = monthNames[monthNumber - 1]; // Array is 0-based
+
+        // Create the text representation
+        const textDate = `${monthName} ${dayNumber}, ${year}`;
+
+        return textDate;
+    }
+
     async function fetchData() {
         try {
-            const currentDate = new Date();
-            const year = currentDate.getUTCFullYear();
-            const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0'); // Adding 1 because months are 0-indexed
-            const day = String(currentDate.getUTCDate()).padStart(2, '0');
-
             const date = `${year}-${month}-${day}T00:00:00Z`;
             // const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${date}`);
             const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${date}`);
@@ -74,205 +104,205 @@ const Dashboard: React.FC = () => {
 
     useEffect(() => {
         fetchData();
+        setTrackingDomain(getDomain(window.location.href))
     }, [])
 
     useEffect(() => {
     }, [data, hourlyTrafficData])
 
     return (
-        <>
-            <NavBar>
-                <div className="row" style={{ margin: 'auto', maxWidth: '2000px', justifyContent: 'space-between' }}>
-                    <h2>Tony&apos;s Web Analytics</h2>
-                </div>
-            </NavBar>
-            <div style={{ height: '48px' }}></div>
-            <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
-                <div className="column" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between' }}>
-                    <h1>{useFormattedCurrentDate().split("T")[0]}</h1>
-                </div>
+        <main className="dashboard" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', width: '100%', maxWidth: '2000px', margin: 'auto' }}>
+            <div className="row" style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between' }}>
+                <h1 className="magic-text">{trackingDomain}</h1>
+                <h1>{formatDateToText(useFormattedCurrentDate().split("T")[0])}</h1>
+            </div>
 
-                <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>
-                    <div className="row" style={{ justifyContent: 'space-between' }}>
+            <Card className="dashboard-grid" style={{ gridColumn: 'span 2', gap: '24px' }}>
+                <div className="row" style={{ justifyContent: 'space-between' }}>
 
-
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Total number of visits where the source is NOT from the tracked domain">
-                                <h6 style={{ whiteSpace: "nowrap" }}>UNIQUE VISITS</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.uniqueVisits} previousData={40} />
-                        </div>
-
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Total visits of all pages combined">
-                                <h6 style={{ whiteSpace: "nowrap" }}>TOTAL PAGE VISITS</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.visits} previousData={40} />
-                        </div>
-
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="The average number of pages viewed per unique visit">
-                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE PAGE VIEWS PER UNIQUE VISIT</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.visits / data.uniqueVisits} previousData={40} />
-                        </div>
-
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Percent of unique visits where the user clicks on the webpage">
-                                <h6 style={{ whiteSpace: "nowrap" }}>BOUNCE RATE</h6>
-                            </Tooltip>
-                            <DataIndicator percent={true} text="from yesterday" currentData={data.bounceVisit * 100 / data.visits} previousData={40} />
-                        </div>
-                        <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
-                            <Tooltip toolTipText="Average duration of a unique visit in seconds">
-                                <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE UNIQUE VISIT DURATION</h6>
-                            </Tooltip>
-                            <DataIndicator text="from yesterday" currentData={data.visitDuration / data.uniqueVisits} previousData={40} />
-                        </div>
-
+                    <Separator style={{ opacity: '0' }} orientation="v" />
+                    <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                        <Tooltip toolTipText="Total number of visits where the source is NOT from the tracked domain">
+                            <h6 style={{ whiteSpace: "nowrap" }}>UNIQUE VISITS</h6>
+                        </Tooltip>
+                        <DataIndicator text="from yesterday" currentData={data.uniqueVisits} previousData={40} />
                     </div>
+
+                    <Separator orientation="v" />
+
+                    <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                        <Tooltip toolTipText="Total visits of all pages combined">
+                            <h6 style={{ whiteSpace: "nowrap" }}>TOTAL PAGE VISITS</h6>
+                        </Tooltip>
+                        <DataIndicator text="from yesterday" currentData={data.visits} previousData={40} />
+                    </div>
+                    <Separator orientation="v" />
+                    <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                        <Tooltip toolTipText="The average number of pages viewed per unique visit">
+                            <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE PAGE VIEWS PER UNIQUE VISIT</h6>
+                        </Tooltip>
+                        <DataIndicator text="from yesterday" currentData={data.visits / data.uniqueVisits} previousData={40} />
+                    </div>
+                    <Separator orientation="v" />
+                    <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                        <Tooltip toolTipText="Percent of unique visits where the user clicks on the webpage">
+                            <h6 style={{ whiteSpace: "nowrap" }}>BOUNCE RATE</h6>
+                        </Tooltip>
+                        <DataIndicator percent={true} text="from yesterday" currentData={data.bounceVisit * 100 / data.visits} previousData={40} />
+                    </div>
+                    <Separator orientation="v" />
+                    <div className="column" style={{ width: 'fit-content', gap: '2px' }}>
+                        <Tooltip toolTipText="Average duration of a unique visit in seconds">
+                            <h6 style={{ whiteSpace: "nowrap" }}>AVERAGE UNIQUE VISIT DURATION</h6>
+                        </Tooltip>
+                        <DataIndicator text="from yesterday" currentData={data.visitDuration / data.uniqueVisits} previousData={40} />
+                    </div>
+
+                </div>
+                <Separator orientation="h" />
+                <div className="row" style={{ gap: '12px', alignItems: 'center' }}>
+                    <h3>Showing data for: </h3>
                     <Select queries={hourlyTrafficTypes} selected={selectedHourlyStat} setSelected={setSelectedHourlyStat} />
-                    <div style={{ height: '400px' }}>
-                        {hourlyTrafficData ?
-                            <SimpleAreaLineChart type={selectedHourlyStat} data={hourlyTrafficData} />
-                            : <h1>Loading</h1>}
-                    </div>
+                </div>
 
-                </Card>
-
-                <Card style={{ gap: '12px', alignItems: 'center' }}>
-                    {data.sourceData ?
-                        <>
-                            <Tooltip toolTipText="Top visitor sources. ">
-                                <h2>Top Source</h2>
-                            </Tooltip>
-                            <div className="column" style={{ gap: '2px' }}>
-                                <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <p>Source</p>
-                                    <p>Visitors</p>
-                                </div>
-                                <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data.sourceData.map((data: any, index: any) => {
-                                    return (
-                                        <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <p>{data.name}</p>
-                                            <h4>{data.value}</h4>
-                                        </div>
-                                    )
-                                })}
-                                <div style={{ height: '400px', marginTop: '24px' }}>
-                                    <SimpleBarChart data={data.sourceData} />
-                                </div>
-                            </div>
-                        </>
+                <div style={{ height: '400px' }}>
+                    {hourlyTrafficData ?
+                        <SimpleAreaLineChart type={selectedHourlyStat} data={hourlyTrafficData} />
                         : <h1>Loading</h1>}
-                </Card>
+                </div>
+            </Card>
 
-                <Card style={{ gap: '12px', alignItems: 'center' }}>
-                    {data.pageData ?
-                        <>
-                            <Tooltip toolTipText="Top visited pages.">
-                                <h2>Top Pages</h2>
-                            </Tooltip>
-                            <div className="column" style={{ gap: '2px' }}>
-
-                                <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <p>Page</p>
-                                    <p>Visitors</p>
-                                </div>
-                                <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data.pageData.map((data: any, index: any) => {
-                                    return (
-                                        <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <p>{data.name}</p>
-                                            <h4>{data.value}</h4>
-                                        </div>
-                                    )
-                                })}
-
-                                <div style={{ height: '400px', marginTop: '24px' }}>
-                                    <SimpleBarChart data={data.pageData} />
-                                </div>
-
+            <Card style={{ gap: '12px', alignItems: 'center' }}>
+                {data.sourceData ?
+                    <>
+                        <Tooltip toolTipText="Top visitor sources. ">
+                            <h2>Top Source</h2>
+                        </Tooltip>
+                        <div className="column" style={{ gap: '2px' }}>
+                            <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                <p>Source</p>
+                                <p>Visitors</p>
                             </div>
-                        </>
-                        : <h1>Loading</h1>}
-
-                </Card>
-
-                <Card style={{ gap: '12px', alignItems: 'center' }}>
-                    {data.countryData ?
-                        <>
-                            <Tooltip toolTipText="Data source for global visitor insights.">
-                                <h2>Countries</h2>
-                            </Tooltip>
-                            <WorldMap
-                                color="#0582CA"
-                                value-suffix="people"
-                                size="lg"
-                                data={data.countryData}
-                            />
-
-                            <div className="column" style={{ gap: '2px' }}>
-
-                                <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <p>Country</p>
-                                    <p>Visitors</p>
-                                </div>
-                                <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data?.countryData.map((data: any, index: any) => {
-                                    return (
-                                        <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <p>{data.country}</p>
-                                            <h4>{data.value}</h4>
-                                        </div>
-                                    )
-                                })}
-
+                            <Separator orientation="h" style={{ margin: '6px 0' }} />
+                            {data.sourceData.map((data: any, index: any) => {
+                                return (
+                                    <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <p>{data.name}</p>
+                                        <h4>{data.value}</h4>
+                                    </div>
+                                )
+                            })}
+                            <div style={{ height: '400px', marginTop: '24px' }}>
+                                <SimpleBarChart data={data.sourceData} />
                             </div>
-                        </>
+                        </div>
+                    </>
+                    : <h1>Loading</h1>}
+            </Card>
 
-                        : <h1>Loading</h1>}
+            <Card style={{ gap: '12px', alignItems: 'center' }}>
+                {data.pageData ?
+                    <>
+                        <Tooltip toolTipText="Top visited pages.">
+                            <h2>Top Pages</h2>
+                        </Tooltip>
+                        <div className="column" style={{ gap: '2px' }}>
 
-                </Card>
-
-
-                <Card style={{ gap: '12px', alignItems: 'center' }}>
-                    {data.deviceData ?
-                        <>
-                            <Tooltip toolTipText="Top visitor devices.">
-                                <h2>Devices</h2>
-                            </Tooltip>
-                            <div className="column" style={{ gap: '2px' }}>
-
-                                <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <p>Device</p>
-                                    <p>Visitors</p>
-                                </div>
-                                <Separator orientation="h" style={{ margin: '6px 0' }} />
-                                {data?.deviceData.map((data: any, index: any) => {
-                                    return (
-                                        <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <p>{data.name}</p>
-                                            <h4>{data.value}</h4>
-                                        </div>
-                                    )
-                                })}
-
-
-                                <div style={{ height: '400px', marginTop: '24px' }}>
-                                    <SimpleBarChart data={data?.deviceData} />
-                                </div>
-
+                            <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                <p>Page</p>
+                                <p>Visitors</p>
                             </div>
-                        </>
+                            <Separator orientation="h" style={{ margin: '6px 0' }} />
+                            {data.pageData.map((data: any, index: any) => {
+                                return (
+                                    <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <p>{data.name}</p>
+                                        <h4>{data.value}</h4>
+                                    </div>
+                                )
+                            })}
 
-                        : <h1>Loading</h1>}
-                </Card>
+                            <div style={{ height: '400px', marginTop: '24px' }}>
+                                <SimpleBarChart data={data.pageData} />
+                            </div>
 
-            </main>
-        </>
+                        </div>
+                    </>
+                    : <h1>Loading</h1>}
 
+            </Card>
+
+            <Card style={{ gap: '12px', alignItems: 'center' }}>
+                {data.countryData ?
+                    <>
+                        <Tooltip toolTipText="Data source for global visitor insights.">
+                            <h2>Countries</h2>
+                        </Tooltip>
+                        <WorldMap
+                            color="#69b4df"
+                            value-suffix="people"
+                            size="lg"
+                            data={data.countryData}
+                        />
+
+                        <div className="column" style={{ gap: '2px' }}>
+
+                            <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                <p>Country</p>
+                                <p>Visitors</p>
+                            </div>
+                            <Separator orientation="h" style={{ margin: '6px 0' }} />
+                            {data?.countryData.map((data: any, index: any) => {
+                                return (
+                                    <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <p>{data.country}</p>
+                                        <h4>{data.value}</h4>
+                                    </div>
+                                )
+                            })}
+
+                        </div>
+                    </>
+
+                    : <h1>Loading</h1>}
+
+            </Card>
+
+
+            <Card style={{ gap: '12px', alignItems: 'center' }}>
+                {data.deviceData ?
+                    <>
+                        <Tooltip toolTipText="Top visitor devices.">
+                            <h2>Devices</h2>
+                        </Tooltip>
+                        <div className="column" style={{ gap: '2px' }}>
+
+                            <div className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                <p>Device</p>
+                                <p>Visitors</p>
+                            </div>
+                            <Separator orientation="h" style={{ margin: '6px 0' }} />
+                            {data?.deviceData.map((data: any, index: any) => {
+                                return (
+                                    <div key={index} className="row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <p>{data.name}</p>
+                                        <h4>{data.value}</h4>
+                                    </div>
+                                )
+                            })}
+
+
+                            <div style={{ height: '400px', marginTop: '24px' }}>
+                                <SimpleBarChart data={data?.deviceData} />
+                            </div>
+
+                        </div>
+                    </>
+
+                    : <h1>Loading</h1>}
+            </Card>
+
+        </main>
     )
 }
 

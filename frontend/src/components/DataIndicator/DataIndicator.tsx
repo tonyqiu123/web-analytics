@@ -29,14 +29,7 @@ const DataIndicator: React.FC<DataIndicatorProps> = ({ currentData, previousData
 
     return (
         <div className='dataIndicator'>
-
-            <p className='currentData'>{numberConverter(currentData)}{percent ? '%' : ''}</p>
-            <div className={`difference ${difference}`}>
-                {difference === 'negative' && '-'}
-                {difference === 'positive' && '+'}
-                {numberConverter(Math.abs(currentData - previousData))} ({numberConverter((currentData / previousData - 1) * 100)}%){difference === 'positive' && '↑'} {difference === 'negative' && '↓'} {text}
-            </div>
-
+            <p className='currentData magic-text'>{numberConverter(currentData)}{percent ? '%' : ''}</p>
         </div>
     );
 };

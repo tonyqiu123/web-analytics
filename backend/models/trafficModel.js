@@ -21,15 +21,7 @@ const deviceSchema = new mongoose.Schema({
 });
 
 const hourlyTrafficSchema = new mongoose.Schema({
-    hour: {
-        type: String,
-        default: function () {
-            const currentHour = new Date().getHours();
-            // Format the hour with leading zeros and set the minute part to '00'
-            const formattedHour = currentHour.toString().padStart(2, '0');
-            return `${formattedHour}:00`;
-        }
-    },
+    hour: { type: String, default: "00:00" },
     visits: { type: Number, default: 0 },
     bounceVisit: { type: Number, default: 0 },
     visitDuration: { type: Number, default: 0 },

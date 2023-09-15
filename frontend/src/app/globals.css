@@ -80,6 +80,11 @@ body.darkMode::-webkit-scrollbar-thumb {
   --success-3: #66d966;
   --success-4: #99e699;
 
+  /* gradient text colors */
+  --purple: rgb(31, 55, 162);
+  --violet: rgb(58, 127, 183);
+  --pink: rgb(143, 183, 244);
+
   /* Border Radius */
   --border-radius-sm: 2px;
   --border-radius-md: 4px;
@@ -182,6 +187,7 @@ a {
 .footer {
   padding: 0px 24px;
 }
+
 .darkMode.footer {
   background-color: black;
 }
@@ -228,4 +234,50 @@ a {
   border-radius: 50%;
   width: 50px;
   height: 50px;
+}
+
+/* glowing text effect */
+@keyframes background-pan {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: -200% center;
+  }
+}
+
+@keyframes scale {
+
+  from,
+  to {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+.magic-text {
+  animation: background-pan 3s linear infinite;
+  background: linear-gradient(to right,
+      var(--purple),
+      var(--violet),
+      var(--pink),
+      var(--purple));
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
 }
