@@ -80,7 +80,7 @@ cron.schedule('0 * * * *', async () => {
             if (isFirstHour) {
                 domain.dailyTraffic.push({});
             } else {
-                domain.dailyTraffic[domain.dailyTraffic.length - 1].hourlyTraffic.push({ hour: currentHour.padStart(2, '0') + ':00' });
+                domain.dailyTraffic[domain.dailyTraffic.length - 1].hourlyTraffic.push({ hour: currentHour.toString().padStart(2, '0')+ ':00' });
             }
 
             // Prepare the update operation for each document
