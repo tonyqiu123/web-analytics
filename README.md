@@ -1,4 +1,10 @@
 All data is collected anonymously and is compliant with the EU's strict GDPR data security standards
+
+<a href='https://web-analytics-three.vercel.app/dashboard?domain=brightbearsinfo.vercel.app' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=brightbearsinfo.vercel.app</a>
+<a href='https://web-analytics-three.vercel.app/dashboard?domain=tonyswebdesigns.ca' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=tonyswebdesigns.ca</a>
+<a href='https://company-job-portal.netlify.app/' target='_blank'>https://company-job-portal.netlify.app/</a>
+<a href='https://tonyqiu.ca/' target='_blank'>https://tonyqiu.ca/</a>
+
 <h1>Usage</h1>
 <p>Add the following script js code (eg. via script) into your website
 <p>
