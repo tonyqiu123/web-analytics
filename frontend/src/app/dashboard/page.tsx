@@ -49,8 +49,8 @@ const Dashboard: React.FC = () => {
 
             const formattedDate = `${year}-${month}-${day}`;
             setIsLoading(true)
-            const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${formattedDate}`);
-            // const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${formattedDate}`);
+            // const response = await fetch(`http://localhost:5000/?domain=${getDomain(window.location.href)}&date=${formattedDate}`);
+            const response = await fetch(`https://web-analytics-production.up.railway.app/?domain=${getDomain(window.location.href)}&date=${formattedDate}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
