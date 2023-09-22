@@ -25,8 +25,8 @@ const Calendar: React.FC<CalendarProps> = ({ selected, setSelected }) => {
     useEffect(() => {
         const fetchFirstDate = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/getFirstDate/?domain=${getDomain(window.location.href)}`);
-                // const response = await fetch(`https://web-analytics-production.up.railway.app/getFirstDate/?domain=${getDomain(window.location.href)}`);
+                // const response = await fetch(`http://localhost:5000/getFirstDate/?domain=${getDomain(window.location.href)}`);
+                const response = await fetch(`https://web-analytics-production.up.railway.app/getFirstDate/?domain=${getDomain(window.location.href)}`);
                 const dateString = await response.json();
                 const firstTrackingDay = new Date(dateString.firstDay);
                 const lastTrackingDay = new Date(dateString.lastDay);
