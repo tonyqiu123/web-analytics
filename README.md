@@ -14,4 +14,4 @@ All data is collected anonymously and is compliant with the EU's strict GDPR dat
 <p>
 <script src="https://web-analytics-83e1.vercel.app/tracker.js"></script>
 </p>
-<img src="https://cdn.discordapp.com/attachments/715319623637270638/1152080579106443265/Frame_70.png"/>
+<img src="https://cdn.discordapp.com/attachments/715319623637270638/1154605596612505721/Group_1.png"/>
