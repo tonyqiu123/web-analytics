@@ -1,9 +1,5 @@
 All data is collected anonymously and is compliant with the EU's strict GDPR data security standards
 
-<a href='https://web-analytics-three.vercel.app/dashboard?domain=brightbearsinfo.vercel.app' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=brightbearsinfo.vercel.app</a>
-<br>
-<a href='https://web-analytics-three.vercel.app/dashboard?domain=tonyswebdesigns.ca' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=tonyswebdesigns.ca</a>
-<br>
 <a href='https://web-analytics-three.vercel.app/dashboard?domain=tonyqiu.ca' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=tonyqiu.ca</a>
 <br>
 <a href='https://web-analytics-three.vercel.app/dashboard?domain=company-job-portal.netlify.app' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=company-job-portal.netlify.app</a>

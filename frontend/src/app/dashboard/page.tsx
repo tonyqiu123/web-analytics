@@ -18,12 +18,12 @@ import Loading from "@/components/Loading/Loading"
 
 const Dashboard: React.FC = () => {
 
-    const currentDate = new Date();
+    const currentDateUtc = new Date().toUTCString();
 
     const [selectedHourlyStat, setSelectedHourlyStat] = useState('uniqueVisits')
     const [trackingDomain, setTrackingDomain] = useState<string | null>('')
     const [showChangeDateModal, setShowChangeDateModal] = useState(false)
-    const [date, setDate] = useState<Date>(currentDate)
+    const [date, setDate] = useState<Date>(new Date(currentDateUtc))
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [data, setData] = useState<any>({
         domain: "example.com",
