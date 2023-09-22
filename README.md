@@ -4,6 +4,8 @@ All data is collected anonymously and is compliant with the EU's strict GDPR dat
 <br>
 <a href='https://web-analytics-three.vercel.app/dashboard?domain=company-job-portal.netlify.app' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=company-job-portal.netlify.app</a>
 <br>
+<a href='https://web-analytics-three.vercel.app/dashboard?domain=50-days-of-components.vercel.app' target='_blank'>https://web-analytics-three.vercel.app/dashboard?domain=50-days-of-components.vercel.app</a>
+<br>
 
 <h1>Usage</h1>
 <p>Add the following script js code (eg. via script) into your website
