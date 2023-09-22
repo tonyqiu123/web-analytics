@@ -41,7 +41,7 @@ const Calendar: React.FC<CalendarProps> = ({ selected, setSelected }) => {
 
     const currentDate = new Date();
     const nextDay = new Date(currentDate);
-    nextDay.setUTCDate(currentDate.getUTCDate() + 2);
+    nextDay.setUTCDate(currentDate.getUTCDate() + 1);
 
     const disabledDays = [
         { from: new Date(Date.UTC(2022, 4, 29)), to: firstTrackingDate },
