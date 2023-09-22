@@ -112,11 +112,36 @@ const updateTraffic = asyncHandler(async (req, res) => {
     }
 });
 
+const getFirstDateOfDomain = asyncHandler(async (req, res) => {
+    try {
+        const { domain } = req.query;
 
+        console.log(domain)
+        // Input validation
+        if (!domain) {
+            return res.status(400).json({ message: 'Invalid input: Domain is required.' });
+        }
+
+        const trafficData = await Traffic.findOne({ domain });
+        // Check if trafficData exists and dailyTraffic has data
+        if (!trafficData || !trafficData.dailyTraffic || trafficData.dailyTraffic.length === 0) {
+            return res.status(404).json({ message: 'No traffic data found for the domain.' });
+        }
+
+        // Parse date string into a JavaScript Date object
+        const firstDay = new Date(trafficData.dailyTraffic[0].date);
+
+        res.status(200).json(firstDay.toISOString().split('T')[0]);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Error updating traffic data', error: error.message });
+    }
+});
 
 
 
 module.exports = {
     getTraffic,
-    updateTraffic
+    updateTraffic,
+    getFirstDateOfDomain
 };

@@ -22,7 +22,7 @@ const Select: FC<SelectProps> = ({ selected, setSelected, darkMode = false, quer
 
     return (
         <Popover isOpen={isOpen} setIsOpen={setIsOpen} className={`select ${darkMode ? 'darkMode' : ''}`} {...props}>
-            <Button style={{ width: '100%', justifyContent: 'space-between' }} size='l' darkMode={darkMode} variant='outline' text={selected ? selected : placeholder} imageSrc='/select/arrow.svg' />
+            <Button style={{ width: '100%', justifyContent: 'space-between' }} size='l' darkMode={darkMode} variant='outline' text={selected ? selected : placeholder} imageSrc='/Select/arrow.svg' />
             <div className='selectDropdown'>
                 {queries.map((query, index) => {
                     return (
