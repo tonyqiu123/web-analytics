@@ -28,7 +28,7 @@ const Calendar: React.FC<CalendarProps> = ({ selected, setSelected }) => {
                 const firstTrackingDay = new Date(dateString);
 
                 const dayBefore = new Date(firstTrackingDay);
-                dayBefore.setDate(firstTrackingDay.getDate() - 1);
+                dayBefore.setDate(firstTrackingDay.getDate());
                 setFirstTrackingDate(dayBefore)
             } catch (err) {
                 console.error(err);
