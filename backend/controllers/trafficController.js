@@ -115,8 +115,6 @@ const updateTraffic = asyncHandler(async (req, res) => {
 const getFirstDateOfDomain = asyncHandler(async (req, res) => {
     try {
         const { domain } = req.query;
-
-        console.log(domain)
         // Input validation
         if (!domain) {
             return res.status(400).json({ message: 'Invalid input: Domain is required.' });
@@ -130,8 +128,9 @@ const getFirstDateOfDomain = asyncHandler(async (req, res) => {
 
         // Parse date string into a JavaScript Date object
         const firstDay = new Date(trafficData.dailyTraffic[0].date);
+        const lastDay = new Date(trafficData.dailyTraffic[trafficData.dailyTraffic.length - 1].date);
 
-        res.status(200).json(firstDay.toISOString().split('T')[0]);
+        res.status(200).json({ firstDay: firstDay.toISOString().split('T')[0], lastDay: lastDay.toISOString().split('T')[0] });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ message: 'Error updating traffic data', error: error.message });
