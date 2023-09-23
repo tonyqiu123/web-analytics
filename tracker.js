@@ -4,6 +4,7 @@ var startTime = new Date().getTime();
 var userDevice = detectDeviceType()
 var path = window.location.pathname;
 var source = document.referrer; //which domain the user came from
+console.log(source)
 var uniqueVisit = true
 var sourceHostname = 'unknown';
 var currentHostname = window.location.hostname;
