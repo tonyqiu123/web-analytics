@@ -48,6 +48,39 @@ document.addEventListener('touchstart', function () {
     userInteracted = true;
 });
 
+window.addEventListener('popstate', async function () {
+    var endTime = new Date().getTime();
+    var durationInSeconds = (endTime - startTime) / 1000;
+
+    const requestData = {
+        country: userCountry,
+        device: userDevice,
+        page: path,
+        source: source,
+        visitDuration: durationInSeconds,
+        isBounceVisit: !userInteracted,
+        domain: window.location.hostname,
+        isUniqueVisit: uniqueVisit
+    };
+
+    try {
+        const apiUrl = `https://web-analytics-production.up.railway.app/`;
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData),
+            keepalive: true
+        })
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error: ', error)
+    }
+});
 
 window.addEventListener('beforeunload', async function () {
     var endTime = new Date().getTime();
