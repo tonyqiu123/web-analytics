@@ -49,6 +49,7 @@ document.addEventListener('touchstart', function () {
     userInteracted = true;
 });
 
+// when client-side routing sites changes url
 window.addEventListener('popstate', async function () {
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;
@@ -83,6 +84,7 @@ window.addEventListener('popstate', async function () {
     }
 });
 
+// when the server-side-routing sites change url or when a page is closed
 window.addEventListener('beforeunload', async function () {
     var endTime = new Date().getTime();
     var durationInSeconds = (endTime - startTime) / 1000;

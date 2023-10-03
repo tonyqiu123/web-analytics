@@ -1,5 +1,3 @@
-All data is collected anonymously and is compliant with the EU's strict GDPR data security standards
-
 <h1>Usage</h1>
 <p>Add the following script js code (eg. via script) into your website
 <p>
