@@ -1,3 +1,6 @@
+All features work for static sites (html, css, vanilla js).
+ALl features work except for page visits for React and Next.js sites. 
+
 <h1>Usage</h1>
 <p>Add the following script js code (eg. via script) into your website
 <p>

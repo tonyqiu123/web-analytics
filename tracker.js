@@ -13,8 +13,7 @@ var userCountry = 'unknown';
 (async () => {
     userCountry = await getUserCountry();
     // convert 'https://brightbearsinfo.vercel.app/blog' to 'brightbearsinfo.vercel.app'
-    if (source && source !== 'direct') {
-        console.log(source)
+    if (source && source !== 'direct') { 
         sourceHostname = new URL(source).hostname;
     }
 
@@ -162,4 +161,4 @@ function detectDeviceType() {
 }
 
 
-// this script tracks the following: user device type (mobile, desktop), time spent visitng site, user country, the current url path (/about, /contact). All data is collected anonymously and is compliant with the EU's strict GDPR data security standards.
+// this script tracks the following: user device type (mobile, desktop), time spent visitng site, user country, the current url path (/about, /contact). All data is collected anonymously.
